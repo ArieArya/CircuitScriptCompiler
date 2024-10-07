@@ -1,0 +1,2 @@
+reg r2;
+print(r2);
