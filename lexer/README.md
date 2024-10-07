@@ -26,10 +26,12 @@ For the first iteration, we can define the following tokens:
 -   `xor` - XOR gate
 -   `nand` - NAND gate
 -   `print` - prints content
+-   `if` - for if statements
 
 ### OPERATOR
 
 -   `=`
+-   `==`
 
 ### PUNCTUATION
 
