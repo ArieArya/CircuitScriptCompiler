@@ -44,5 +44,5 @@ class Tokenizer:
         return idx == self.length
 
 
-tokenizer = Tokenizer('wire w1;\nwire w2;')
+tokenizer = Tokenizer('wire w1;\nwire w2;\nreg r = and(0, 1);')
 tokenizer.tokenize()

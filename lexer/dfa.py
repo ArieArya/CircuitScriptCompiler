@@ -5,6 +5,14 @@ import string
 
 class DFA:
     def __init__(self):
+        # TODO: Make this work with keywords that share the same first letter.
+        # TODO: Add `nand` after we do.
+        KEYWORDS = ['wire', 'reg', 'and', 'or', 'not', 'xor', 'print', 'if']
+        KEYWORD_STATES = []
+        for keyword in KEYWORDS:
+            for i in range(len(keyword)):
+                KEYWORD_STATES.append(f'{keyword.upper()}{i}')
+
         State = Enum(
             'State',
             [
@@ -13,20 +21,14 @@ class DFA:
                 'DIGIT',
                 'OPERATOR_ASSIGN',
                 'OPERATOR_EQUALITY',
-                'WIRE1',
-                'WIRE2',
-                'WIRE3',
-                'WIRE4',
-                'AND1',
-                'AND2',
-                'AND3',
                 'LPAREN',
                 'RPAREN',
                 'SEMICOLON',
                 'COMMA',
                 'IDENTIFIER',
                 'WHITESPACE',
-            ],
+            ]
+            + KEYWORD_STATES,
         )
 
         self.ACCEPT_STATES = set(
@@ -35,13 +37,6 @@ class DFA:
                 State.DIGIT,
                 State.OPERATOR_ASSIGN,
                 State.OPERATOR_EQUALITY,
-                State.WIRE1,
-                State.WIRE2,
-                State.WIRE3,
-                State.WIRE4,
-                State.AND1,
-                State.AND2,
-                State.AND3,
                 State.LPAREN,
                 State.RPAREN,
                 State.SEMICOLON,
@@ -50,6 +45,9 @@ class DFA:
                 State.WHITESPACE,
             ]
         )
+        for state in KEYWORD_STATES:
+            self.ACCEPT_STATES.add(State[state])
+
         δ = defaultdict(dict)
 
         def add_all(state, transitions, next_state):
@@ -57,44 +55,54 @@ class DFA:
                 if c not in δ[state]:
                     δ[state][c] = next_state
 
-        lowercase_and_digits = string.ascii_lowercase + string.digits
+        LOWERCASE_AND_DIGITS = string.ascii_lowercase + string.digits
+
+        def add_keyword_states(keyword):
+            n = len(keyword)
+
+            first_state_str = f'{keyword.upper()}{0}'
+            first_state = State[first_state_str]
+            δ[State.START][keyword[0]] = first_state
+
+            for i in range(n - 1):
+                c = keyword[i + 1]
+                state_str = f'{keyword.upper()}{i}'
+                next_state_str = f'{keyword.upper()}{i + 1}'
+                state = State[state_str]
+                next_state = State[next_state_str]
+
+                δ[state][c] = next_state
+                add_all(state, LOWERCASE_AND_DIGITS, State.IDENTIFIER)
+
+            last_state_str = f'{keyword.upper()}{n - 1}'
+            last_state = State[last_state_str]
+            add_all(last_state, LOWERCASE_AND_DIGITS, State.IDENTIFIER)
 
         δ[State.START] = {
-            '$': State.ERROR,
             '0': State.DIGIT,
             '1': State.DIGIT,
-            '=': State.OPERATOR_ASSIGN,
             '(': State.LPAREN,
             ')': State.RPAREN,
             ';': State.SEMICOLON,
             ',': State.COMMA,
-            ' ': State.WHITESPACE,
-            '\n': State.WHITESPACE,
         }
 
-        add_all(State.START, string.ascii_lowercase, State.IDENTIFIER)
+        # Keywords.
+        for keyword in KEYWORDS:
+            add_keyword_states(keyword)
 
-        δ[State.START]['w'] = State.WIRE1
-        δ[State.WIRE1] = {'i': State.WIRE2}
-        add_all(State.WIRE1, lowercase_and_digits, State.IDENTIFIER)
-        δ[State.WIRE2] = {'r': State.WIRE3}
-        add_all(State.WIRE2, lowercase_and_digits, State.IDENTIFIER)
-        δ[State.WIRE3] = {'e': State.WIRE4}
-        add_all(State.WIRE3, lowercase_and_digits, State.IDENTIFIER)
-        add_all(State.WIRE4, lowercase_and_digits, State.IDENTIFIER)
-
-        δ[State.START]['a'] = State.AND1
-        δ[State.AND1] = {'n': State.AND2}
-        add_all(State.AND1, lowercase_and_digits, State.IDENTIFIER)
-        δ[State.AND2] = {'d': State.AND3}
-        add_all(State.AND2, lowercase_and_digits, State.IDENTIFIER)
-        add_all(State.AND3, lowercase_and_digits, State.IDENTIFIER)
-
+        # Operators.
+        δ[State.START]['='] = State.OPERATOR_ASSIGN
         δ[State.OPERATOR_ASSIGN] = {'=': State.OPERATOR_EQUALITY}
 
-        add_all(State.IDENTIFIER, lowercase_and_digits, State.IDENTIFIER)
+        # Identifiers.
+        add_all(State.START, string.ascii_lowercase, State.IDENTIFIER)
+        add_all(State.IDENTIFIER, LOWERCASE_AND_DIGITS, State.IDENTIFIER)
 
+        # Whitespace.
+        δ[State.START][' '] = State.WHITESPACE
         δ[State.WHITESPACE][' '] = State.WHITESPACE
+        δ[State.START]['\n'] = State.WHITESPACE
 
         DFA.State = State  # Make State an inner class.
         self.δ = δ
