@@ -42,7 +42,7 @@ For the first iteration, we can define the following tokens:
 -   `;`
 -   `,`
 
-## INTLITERAL
+## INTLITERAL
 
 -   `1`
 -   `0`
