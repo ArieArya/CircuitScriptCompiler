@@ -6,31 +6,47 @@ class Tokenizer:
     def __init__(self, source_code):
         source_code = re.sub(r'\s+', '', source_code)  # Remove all whitespace.
 
-        self.EOF = '$'  # Sentinel node.
         self.dfa = DFA()
-        self.src = source_code + self.EOF
+        self.src = source_code
         self.idx = 0
+        self.length = len(self.src)
 
     def tokenize(self):
-        while lexeme := self.recognize_lexeme():
-            print(lexeme)
+        while not self.eof(self.idx):
+            lexeme, accepts = self.recognize_lexeme()
+            if not accepts:
+                print(f'Error parsing {repr(lexeme)}.')
+                exit()
+            else:
+                print(lexeme)
 
     def recognize_lexeme(self):
+        if self.eof(self.idx):
+            return 'EOF', False
+
         state = DFA.State.START
         start = self.idx
         end = self.idx
 
-        c = self.src[end]
-        while c != self.EOF and self.dfa.has_transition(state, c):
-            state = self.dfa.transition(state, c)
+        last_accept_state = None
+        last_accept_end = end
+
+        while not self.eof(end) and state != DFA.State.ERROR:
+            state = self.dfa.transition(state, self.src[end])
+            if self.dfa.accepts(state):
+                last_accept_state = state
+                last_accept_end = end
             end += 1
-            c = self.src[end]
 
-        self.idx = end  # Advance pointer.c
+        next_idx = end if last_accept_state is None else last_accept_end + 1
+        self.idx = next_idx  # Advance pointer.
 
-        value = self.src[start:end]
-        return value if self.dfa.accepts(state) else None
+        lexeme = self.src[start:next_idx]
+        return lexeme, self.dfa.accepts(last_accept_state)
+
+    def eof(self, idx):
+        return idx == self.length
 
 
-tokenizer = Tokenizer('x = 1')
+tokenizer = Tokenizer('and == 1 === (wire)')
 tokenizer.tokenize()
