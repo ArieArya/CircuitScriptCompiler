@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# Run the Python script
 python3 tester.py
 
 if [ $? -eq 0 ]; then

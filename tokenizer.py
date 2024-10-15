@@ -92,17 +92,3 @@ class Tokenizer:
 
     def eof(self, idx):
         return idx == self.length
-
-
-tokenizer = Tokenizer('wire w1 = and(1, 0)')
-tokens, errors = tokenizer.tokenize()
-
-print('Tokens:')
-for lexeme, token in tokens:
-    print(f'{token} (Value = {repr(lexeme)})')
-
-print()
-
-print('Errors:')
-for lexeme, idx in errors:
-    print(f'Error parsing {repr(lexeme)} at index {idx}.')
