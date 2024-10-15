@@ -13,17 +13,14 @@ class Tokenizer:
 
     def tokenize(self):
         while not self.eof(self.idx):
-            lexeme, accepts = self.recognize_lexeme()
-            if not accepts:
+            lexeme, state = self.recognize_lexeme()
+            if self.dfa.accepts(state):
+                print(f'{state} (Value = {repr(lexeme)})')
+            else:
                 print(f'Error parsing {repr(lexeme)}.')
                 exit()
-            else:
-                print(lexeme)
 
     def recognize_lexeme(self):
-        if self.eof(self.idx):
-            return 'EOF', False
-
         state = DFA.State.START
         start = self.idx
         end = self.idx
@@ -42,11 +39,11 @@ class Tokenizer:
         self.idx = next_idx  # Advance pointer.
 
         lexeme = self.src[start:next_idx]
-        return lexeme, self.dfa.accepts(last_accept_state)
+        return lexeme, last_accept_state
 
     def eof(self, idx):
         return idx == self.length
 
 
-tokenizer = Tokenizer('and == 1 === (wire)')
+tokenizer = Tokenizer('wire i1;\nwire i2;\ni3 = and(r1, r2);')
 tokenizer.tokenize()
