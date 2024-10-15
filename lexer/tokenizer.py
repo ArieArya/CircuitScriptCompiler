@@ -9,8 +9,9 @@ class Tokenizer:
         self.idx = 0
         self.length = len(self.src)
 
-        Tokens = Enum(
-            'Tokens',
+        # We define the enum locally first so we don't need to append `self` all the time.
+        Token = Enum(
+            'Token',
             [
                 'KEYWORD',
                 'IDENTIFIER',
@@ -25,16 +26,16 @@ class Tokenizer:
         )
 
         self.state_to_token = {
-            DFA.State.START: Tokens.WHITESPACE,
-            DFA.State.DIGIT: Tokens.DIGIT,
-            DFA.State.OPERATOR_ASSIGN: Tokens.OPERATOR,
-            DFA.State.OPERATOR_EQUALITY: Tokens.OPERATOR,
-            DFA.State.LPAREN: Tokens.LPAREN,
-            DFA.State.RPAREN: Tokens.RPAREN,
-            DFA.State.SEMICOLON: Tokens.SEMICOLON,
-            DFA.State.COMMA: Tokens.COMMA,
-            DFA.State.IDENTIFIER: Tokens.IDENTIFIER,
-            DFA.State.WHITESPACE: Tokens.WHITESPACE,
+            DFA.State.START: Token.WHITESPACE,
+            DFA.State.DIGIT: Token.DIGIT,
+            DFA.State.OPERATOR_ASSIGN: Token.OPERATOR,
+            DFA.State.OPERATOR_EQUALITY: Token.OPERATOR,
+            DFA.State.LPAREN: Token.LPAREN,
+            DFA.State.RPAREN: Token.RPAREN,
+            DFA.State.SEMICOLON: Token.SEMICOLON,
+            DFA.State.COMMA: Token.COMMA,
+            DFA.State.IDENTIFIER: Token.IDENTIFIER,
+            DFA.State.WHITESPACE: Token.WHITESPACE,
         }
 
         for keyword in self.dfa.KEYWORDS:
@@ -44,13 +45,13 @@ class Tokenizer:
                 state = DFA.State[state_str]
 
                 # Partial keywords are considered as identifiers.
-                self.state_to_token[state] = Tokens.IDENTIFIER
+                self.state_to_token[state] = Token.IDENTIFIER
 
             last_state_str = f'{keyword.upper()}{n - 1}'
             last_state = DFA.State[last_state_str]
-            self.state_to_token[last_state] = Tokens.KEYWORD
+            self.state_to_token[last_state] = Token.KEYWORD
 
-        self.Tokens = Tokens
+        self.Token = Token
 
     def tokenize(self):
         tokens = []
@@ -66,15 +67,7 @@ class Tokenizer:
             else:
                 errors.append((lexeme, self.idx - 1))
 
-        print('Tokens:')
-        for lexeme, token in tokens:
-            print(f'{token} (Value = {repr(lexeme)})')
-
-        print()
-
-        print('Errors:')
-        for lexeme, idx in errors:
-            print(f'Error parsing {repr(lexeme)} at index {idx}.')
+        return tokens, errors
 
     def recognize_lexeme(self):
         state = DFA.State.START
@@ -101,5 +94,15 @@ class Tokenizer:
         return idx == self.length
 
 
-tokenizer = Tokenizer('wire w1 = -1 = == ?&;')
-tokenizer.tokenize()
+tokenizer = Tokenizer('wire w1 = and(1, 0)')
+tokens, errors = tokenizer.tokenize()
+
+print('Tokens:')
+for lexeme, token in tokens:
+    print(f'{token} (Value = {repr(lexeme)})')
+
+print()
+
+print('Errors:')
+for lexeme, idx in errors:
+    print(f'Error parsing {repr(lexeme)} at index {idx}.')

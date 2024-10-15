@@ -13,6 +13,7 @@ class DFA:
             for i in range(len(keyword)):
                 KEYWORD_STATES.append(f'{keyword.upper()}{i}')
 
+        # We define the enum locally first so we don't need to append `self` all the time.
         State = Enum(
             'State',
             [
@@ -56,6 +57,7 @@ class DFA:
                     δ[state][c] = next_state
 
         LOWERCASE_AND_DIGITS = string.ascii_lowercase + string.digits
+        LOWERCASE_AND_DIGITS_AND_UNDERSCORE = LOWERCASE_AND_DIGITS + '_'
 
         def add_keyword_states(keyword):
             n = len(keyword)
@@ -72,11 +74,11 @@ class DFA:
                 next_state = State[next_state_str]
 
                 δ[state][c] = next_state
-                add_all(state, LOWERCASE_AND_DIGITS, State.IDENTIFIER)
+                add_all(state, LOWERCASE_AND_DIGITS_AND_UNDERSCORE, State.IDENTIFIER)
 
             last_state_str = f'{keyword.upper()}{n - 1}'
             last_state = State[last_state_str]
-            add_all(last_state, LOWERCASE_AND_DIGITS, State.IDENTIFIER)
+            add_all(last_state, LOWERCASE_AND_DIGITS_AND_UNDERSCORE, State.IDENTIFIER)
 
         δ[State.START] = {
             '0': State.DIGIT,
@@ -96,8 +98,8 @@ class DFA:
         δ[State.OPERATOR_ASSIGN] = {'=': State.OPERATOR_EQUALITY}
 
         # Identifiers.
-        add_all(State.START, string.ascii_lowercase, State.IDENTIFIER)
-        add_all(State.IDENTIFIER, LOWERCASE_AND_DIGITS, State.IDENTIFIER)
+        add_all(State.START, string.ascii_lowercase + '_', State.IDENTIFIER)
+        add_all(State.IDENTIFIER, LOWERCASE_AND_DIGITS_AND_UNDERSCORE, State.IDENTIFIER)
 
         # Whitespace.
         δ[State.START][' '] = State.WHITESPACE
@@ -106,9 +108,6 @@ class DFA:
 
         DFA.State = State  # Make State an inner class.
         self.δ = δ
-
-    def has_transition(self, state, c):
-        return c in self.δ[state]
 
     def transition(self, state, c):
         if c in self.δ[state]:
