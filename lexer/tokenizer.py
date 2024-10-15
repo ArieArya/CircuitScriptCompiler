@@ -1,11 +1,8 @@
 from dfa import DFA
-import re
 
 
 class Tokenizer:
     def __init__(self, source_code):
-        source_code = re.sub(r'\s+', '', source_code)  # Remove all whitespace.
-
         self.dfa = DFA()
         self.src = source_code
         self.idx = 0
@@ -14,11 +11,13 @@ class Tokenizer:
     def tokenize(self):
         while not self.eof(self.idx):
             lexeme, state = self.recognize_lexeme()
-            if self.dfa.accepts(state):
+            if state == DFA.State.WHITESPACE:
+                continue
+            elif self.dfa.accepts(state):
                 print(f'{state} (Value = {repr(lexeme)})')
             else:
-                print(f'Error parsing {repr(lexeme)}.')
-                exit()
+                print(f'Error parsing {repr(lexeme)} at index {self.idx}.')
+                # break  # Stop at first error.
 
     def recognize_lexeme(self):
         state = DFA.State.START
@@ -45,5 +44,5 @@ class Tokenizer:
         return idx == self.length
 
 
-tokenizer = Tokenizer('wire i1;\nwire i2;\ni3 = and(r1, r2);')
+tokenizer = Tokenizer('wire w1;\nwire w2;')
 tokenizer.tokenize()

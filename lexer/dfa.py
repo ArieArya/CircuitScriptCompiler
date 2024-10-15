@@ -1,129 +1,103 @@
 from enum import Enum
 from collections import defaultdict
+import string
 
 
 class DFA:
-    State = Enum(
-        'State',
-        [
-            'START',
-            'ERROR',
-            'DIGIT',
-            'OPERATOR_ASSIGN',
-            'OPERATOR_EQUALITY',
-            'WIRE1',
-            'WIRE2',
-            'WIRE3',
-            'WIRE4',
-            'AND1',
-            'AND2',
-            'AND3',
-            'LPAREN',
-            'RPAREN',
-            'SEMICOLON',
-            'COMMA',
-            'IDENTIFIER',
-        ],
-    )
-
     def __init__(self):
-        self.ACCEPT_STATES = set(
+        State = Enum(
+            'State',
             [
-                self.State.START,
-                self.State.DIGIT,
-                self.State.OPERATOR_ASSIGN,
-                self.State.OPERATOR_EQUALITY,
-                self.State.WIRE4,
-                self.State.AND3,
-                self.State.LPAREN,
-                self.State.RPAREN,
-                self.State.SEMICOLON,
-                self.State.COMMA,
-                self.State.IDENTIFIER,
-            ]
+                'START',
+                'ERROR',
+                'DIGIT',
+                'OPERATOR_ASSIGN',
+                'OPERATOR_EQUALITY',
+                'WIRE1',
+                'WIRE2',
+                'WIRE3',
+                'WIRE4',
+                'AND1',
+                'AND2',
+                'AND3',
+                'LPAREN',
+                'RPAREN',
+                'SEMICOLON',
+                'COMMA',
+                'IDENTIFIER',
+                'WHITESPACE',
+            ],
         )
 
-        self.δ = defaultdict(dict)
-        self.δ[self.State.START] = {
-            '$': self.State.ERROR,
-            '0': self.State.DIGIT,
-            '1': self.State.DIGIT,
-            '=': self.State.OPERATOR_ASSIGN,
-            '(': self.State.LPAREN,
-            ')': self.State.RPAREN,
-            ';': self.State.SEMICOLON,
-            ',': self.State.COMMA,
-            'a': self.State.AND1,
-            'b': self.State.IDENTIFIER,
-            'c': self.State.IDENTIFIER,
-            'd': self.State.IDENTIFIER,
-            'e': self.State.IDENTIFIER,
-            'f': self.State.IDENTIFIER,
-            'g': self.State.IDENTIFIER,
-            'h': self.State.IDENTIFIER,
-            'i': self.State.IDENTIFIER,
-            'j': self.State.IDENTIFIER,
-            'k': self.State.IDENTIFIER,
-            'l': self.State.IDENTIFIER,
-            'm': self.State.IDENTIFIER,
-            'n': self.State.IDENTIFIER,
-            'o': self.State.IDENTIFIER,
-            'p': self.State.IDENTIFIER,
-            'q': self.State.IDENTIFIER,
-            'r': self.State.IDENTIFIER,
-            's': self.State.IDENTIFIER,
-            't': self.State.IDENTIFIER,
-            'u': self.State.IDENTIFIER,
-            'v': self.State.IDENTIFIER,
-            'w': self.State.WIRE1,
-            'x': self.State.IDENTIFIER,
-            'y': self.State.IDENTIFIER,
-            'z': self.State.IDENTIFIER,
+        self.ACCEPT_STATES = set(
+            [
+                State.START,
+                State.DIGIT,
+                State.OPERATOR_ASSIGN,
+                State.OPERATOR_EQUALITY,
+                State.WIRE1,
+                State.WIRE2,
+                State.WIRE3,
+                State.WIRE4,
+                State.AND1,
+                State.AND2,
+                State.AND3,
+                State.LPAREN,
+                State.RPAREN,
+                State.SEMICOLON,
+                State.COMMA,
+                State.IDENTIFIER,
+                State.WHITESPACE,
+            ]
+        )
+        δ = defaultdict(dict)
+
+        def add_all(state, transitions, next_state):
+            for c in transitions:
+                if c not in δ[state]:
+                    δ[state][c] = next_state
+
+        lowercase_and_digits = string.ascii_lowercase + string.digits
+
+        δ[State.START] = {
+            '$': State.ERROR,
+            '0': State.DIGIT,
+            '1': State.DIGIT,
+            '=': State.OPERATOR_ASSIGN,
+            '(': State.LPAREN,
+            ')': State.RPAREN,
+            ';': State.SEMICOLON,
+            ',': State.COMMA,
+            ' ': State.WHITESPACE,
+            '\n': State.WHITESPACE,
         }
-        self.δ[self.State.WIRE1] = {'i': self.State.WIRE2}
-        self.δ[self.State.WIRE2] = {'r': self.State.WIRE3}
-        self.δ[self.State.WIRE3] = {'e': self.State.WIRE4}
-        self.δ[self.State.AND1] = {'n': self.State.AND2}
-        self.δ[self.State.AND2] = {'d': self.State.AND3}
-        self.δ[self.State.OPERATOR_ASSIGN] = {'=': self.State.OPERATOR_EQUALITY}
-        self.δ[self.State.IDENTIFIER] = {
-            'a': self.State.IDENTIFIER,
-            'b': self.State.IDENTIFIER,
-            'c': self.State.IDENTIFIER,
-            'd': self.State.IDENTIFIER,
-            'e': self.State.IDENTIFIER,
-            'f': self.State.IDENTIFIER,
-            'g': self.State.IDENTIFIER,
-            'h': self.State.IDENTIFIER,
-            'i': self.State.IDENTIFIER,
-            'j': self.State.IDENTIFIER,
-            'k': self.State.IDENTIFIER,
-            'l': self.State.IDENTIFIER,
-            'm': self.State.IDENTIFIER,
-            'n': self.State.IDENTIFIER,
-            'o': self.State.IDENTIFIER,
-            'p': self.State.IDENTIFIER,
-            'q': self.State.IDENTIFIER,
-            'r': self.State.IDENTIFIER,
-            's': self.State.IDENTIFIER,
-            't': self.State.IDENTIFIER,
-            'u': self.State.IDENTIFIER,
-            'v': self.State.IDENTIFIER,
-            'w': self.State.IDENTIFIER,
-            'x': self.State.IDENTIFIER,
-            'y': self.State.IDENTIFIER,
-            'z': self.State.IDENTIFIER,
-            '0': self.State.IDENTIFIER,
-            '1': self.State.IDENTIFIER,
-            '2': self.State.IDENTIFIER,
-            '3': self.State.IDENTIFIER,
-            '4': self.State.IDENTIFIER,
-            '5': self.State.IDENTIFIER,
-            '6': self.State.IDENTIFIER,
-            '7': self.State.IDENTIFIER,
-            '8': self.State.IDENTIFIER,
-            '9': self.State.IDENTIFIER,
-        }
+
+        add_all(State.START, string.ascii_lowercase, State.IDENTIFIER)
+
+        δ[State.START]['w'] = State.WIRE1
+        δ[State.WIRE1] = {'i': State.WIRE2}
+        add_all(State.WIRE1, lowercase_and_digits, State.IDENTIFIER)
+        δ[State.WIRE2] = {'r': State.WIRE3}
+        add_all(State.WIRE2, lowercase_and_digits, State.IDENTIFIER)
+        δ[State.WIRE3] = {'e': State.WIRE4}
+        add_all(State.WIRE3, lowercase_and_digits, State.IDENTIFIER)
+        add_all(State.WIRE4, lowercase_and_digits, State.IDENTIFIER)
+
+        δ[State.START]['a'] = State.AND1
+        δ[State.AND1] = {'n': State.AND2}
+        add_all(State.AND1, lowercase_and_digits, State.IDENTIFIER)
+        δ[State.AND2] = {'d': State.AND3}
+        add_all(State.AND2, lowercase_and_digits, State.IDENTIFIER)
+        add_all(State.AND3, lowercase_and_digits, State.IDENTIFIER)
+
+        δ[State.OPERATOR_ASSIGN] = {'=': State.OPERATOR_EQUALITY}
+
+        add_all(State.IDENTIFIER, lowercase_and_digits, State.IDENTIFIER)
+
+        δ[State.WHITESPACE][' '] = State.WHITESPACE
+
+        DFA.State = State  # Make State an inner class.
+        self.δ = δ
 
     def has_transition(self, state, c):
         return c in self.δ[state]
