@@ -1,0 +1,14 @@
+Lexing file: whitespace.circuit
+Tokens:
+Token.OPERATOR (Lexeme = '==')
+Token.OPERATOR (Lexeme = '=')
+Token.OPERATOR (Lexeme = '=')
+Token.OPERATOR (Lexeme = '==')
+Token.IDENTIFIER (Lexeme = 'wireasdf')
+Token.SEMICOLON (Lexeme = ';')
+Token.KEYWORD (Lexeme = 'wire')
+Token.IDENTIFIER (Lexeme = 'asdf')
+Token.SEMICOLON (Lexeme = ';')
+Token.KEYWORD (Lexeme = 'wire')
+Token.IDENTIFIER (Lexeme = 'asdf')
+Token.SEMICOLON (Lexeme = ';')

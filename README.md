@@ -1,18 +1,14 @@
 # CircuitScript Tokenizer
 
----
-
 ## How to Run
 
-First, note that sample codes that will be lexed are stored under `./sample_code/*.circuit`.
+First, note that sample codes that will be tokenized are stored under `sample_code/*.circuit`.
 
 1. Ensure docker is installed: https://docs.docker.com/engine/install/
 2. Build the docker image as specified in the Dockerfile: `docker build -t circuit-script-compiler .`
 3. Run the docker container: `docker run circuit-script-compiler`
 
-The output of the script will show the tokenization outputs of the sample scripts stored under `./sample_code/*.circuit`.
-
----
+The output of the script will show the tokenization outputs of the sample scripts stored under `sample_code/*.circuit`. The expected output is found in `sample_code/expected_output/`.
 
 ## DFA
 
@@ -21,8 +17,6 @@ The DFA below is a partial representation of the language. For brevity, not all 
 To reduce verbosity, the φ transition represents the set of all lowercase ASCII letters, digits, and the underscore character, excluding any conflicting transitions the state might already have. For example, the φ transition from the `wire0` state contains 'a'-'z' excluding 'i', 0-9, and '\_'.
 
 ![DFA](docs/dfa.webp "DFA")
-
----
 
 ## Code Samples
 
@@ -74,13 +68,9 @@ while not self.eof(end) and state != DFA.State.ERROR:
     end += 1
 ```
 
----
-
 ## Error Handling
 
 We don't allow syntax errors in programs. Code with any syntax errors will fail to compile. However, we _do_ recover and continue tokenizing after finding an error in order to find as many errors as possible. We report every syntax error to the user at once for ease of debugging. The error's location in the source code is also included.
-
----
 
 ## Lexical Specification
 
@@ -122,8 +112,6 @@ For the first iteration, we define the following tokens:
 ### DIGIT
 
 - Any digits (0 - 9)
-
----
 
 ## Contributions
 
