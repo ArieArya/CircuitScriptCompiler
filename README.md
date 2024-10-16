@@ -35,18 +35,25 @@ For the first iteration, we can define the following tokens:
 -   `=`
 -   `==`
 
-### PUNCTUATION
+### LPAREN
 
 -   `(`
+
+### RPAREN
+
 -   `)`
+
+### SEMICOLON
+
 -   `;`
+
+### COMMA
+
 -   `,`
 
-## INTLITERAL
+### DIGIT
 
--   `1`
--   `0`
--   Or other integers when using buses in later implementations
+-   Any digits (0 - 9)
 
 ---
 
