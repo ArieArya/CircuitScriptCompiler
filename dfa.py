@@ -95,7 +95,7 @@ class DFA:
 
         # Operators.
         δ[State.START]['='] = State.OPERATOR_ASSIGN
-        δ[State.OPERATOR_ASSIGN] = {'=': State.OPERATOR_EQUALITY}
+        δ[State.OPERATOR_ASSIGN]['='] = State.OPERATOR_EQUALITY
 
         # Identifiers.
         add_all(State.START, string.ascii_lowercase + '_', State.IDENTIFIER)

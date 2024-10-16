@@ -74,6 +74,8 @@ class Tokenizer:
         start = self.idx
         end = self.idx
 
+        # Record last accepted state (if any) in case further searching isn't accepted.
+        # This also implements maximal munch as a byproduct.
         last_accept_state = None
         last_accept_end = end
 
