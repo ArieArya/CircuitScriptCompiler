@@ -1,0 +1,3 @@
+wire invalid-id;
+reg invalid_op = !0;
+reg invalid_digit = 2;

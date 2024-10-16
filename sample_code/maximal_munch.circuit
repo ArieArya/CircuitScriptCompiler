@@ -1,0 +1,4 @@
+=====
+
+wire wire123;
+reg r1 = and(andd, orr);

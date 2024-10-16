@@ -3,7 +3,7 @@ from tokenizer import Tokenizer
 
 
 def read_source_code_from_file(file_path):
-    # Reads the source code from a text file
+    # Reads the source code from a text file.
     with open(file_path, 'r') as file:
         return file.read()
 
@@ -25,7 +25,7 @@ if __name__ == '__main__':
 
         print('Tokens:')
         for lexeme, token in tokens:
-            print(f'{token} (Value = {repr(lexeme)})')
+            print(f'{token} (Lexeme = {repr(lexeme)})')
 
         if errors:
             print()

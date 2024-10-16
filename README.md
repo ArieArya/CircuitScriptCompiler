@@ -24,7 +24,6 @@ For the first iteration, we can define the following tokens:
 - `or` - OR gate
 - `not` - NOT gate
 - `xor` - XOR gate
-- `nand` - NAND gate
 - `print` - prints content
 - `if` - for if statements
 
@@ -37,8 +36,6 @@ For the first iteration, we can define the following tokens:
 
 - `(`
 - `)`
-- `{`
-- `}`
 - `;`
 - `,`
 
