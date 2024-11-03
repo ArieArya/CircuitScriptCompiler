@@ -62,7 +62,7 @@ class LL1Parser:
 			print(" " * depth + "|-> " + str(cur_node))  # print with indentation
 
 			# iterate over next nodes
-			for child_node in cur_node.children:
+			for child_node in cur_node.children[::-1]:  # reverse so we traverse DFS correctly
 				stack.append((child_node, depth+1))
 
 
