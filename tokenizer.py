@@ -1,6 +1,13 @@
 from dfa import DFA
-from enum import Enum
+from enums import TokenClass
 
+class Token:
+	def __init__(self, token_class, lexeme):
+		self.token_class = token_class
+		self.lexeme = lexeme
+
+	def __str__(self):
+		return f'{self.token_class}("{self.lexeme}")'
 
 class Tokenizer:
     def __init__(self, source_code):
@@ -9,33 +16,17 @@ class Tokenizer:
         self.idx = 0
         self.length = len(self.src)
 
-        # We define the enum locally first so we don't need to append `self` all the time.
-        Token = Enum(
-            'Token',
-            [
-                'KEYWORD',
-                'IDENTIFIER',
-                'OPERATOR',
-                'WHITESPACE',
-                'DIGIT',
-                'LPAREN',
-                'RPAREN',
-                'COMMA',
-                'SEMICOLON',
-            ],
-        )
-
-        self.state_to_token = {
-            DFA.State.START: Token.WHITESPACE,
-            DFA.State.DIGIT: Token.DIGIT,
-            DFA.State.OPERATOR_ASSIGN: Token.OPERATOR,
-            DFA.State.OPERATOR_EQUALITY: Token.OPERATOR,
-            DFA.State.LPAREN: Token.LPAREN,
-            DFA.State.RPAREN: Token.RPAREN,
-            DFA.State.SEMICOLON: Token.SEMICOLON,
-            DFA.State.COMMA: Token.COMMA,
-            DFA.State.IDENTIFIER: Token.IDENTIFIER,
-            DFA.State.WHITESPACE: Token.WHITESPACE,
+        self.state_to_token_class = {
+            DFA.State.START: TokenClass.WHITESPACE,
+            DFA.State.DIGIT: TokenClass.DIGIT,
+            DFA.State.OPERATOR_ASSIGN: TokenClass.OPERATOR,
+            DFA.State.OPERATOR_EQUALITY: TokenClass.OPERATOR,
+            DFA.State.LPAREN: TokenClass.LPAREN,
+            DFA.State.RPAREN: TokenClass.RPAREN,
+            DFA.State.SEMICOLON: TokenClass.SEMICOLON,
+            DFA.State.COMMA: TokenClass.COMMA,
+            DFA.State.IDENTIFIER: TokenClass.IDENTIFIER,
+            DFA.State.WHITESPACE: TokenClass.WHITESPACE,
         }
 
         for keyword in self.dfa.KEYWORDS:
@@ -45,13 +36,11 @@ class Tokenizer:
                 state = DFA.State[state_str]
 
                 # Partial keywords are considered as identifiers.
-                self.state_to_token[state] = Token.IDENTIFIER
+                self.state_to_token_class[state] = TokenClass.IDENTIFIER
 
             last_state_str = f'{keyword.upper()}{n - 1}'
             last_state = DFA.State[last_state_str]
-            self.state_to_token[last_state] = Token.KEYWORD
-
-        self.Token = Token
+            self.state_to_token_class[last_state] = TokenClass.KEYWORD
 
     def tokenize(self):
         tokens = []
@@ -62,8 +51,8 @@ class Tokenizer:
             if state == DFA.State.WHITESPACE:
                 continue
             elif self.dfa.accepts(state):
-                token = self.state_to_token[state]
-                tokens.append((lexeme, token))
+                token_class = self.state_to_token_class[state]
+                tokens.append(Token(token_class, lexeme))
             else:
                 errors.append((lexeme, self.idx - 1))
 
