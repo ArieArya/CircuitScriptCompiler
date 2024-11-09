@@ -1,6 +1,6 @@
 import os
 from lexer import Tokenizer
-from parser import LL1Parser
+from parser import LL1Parser, ASTGenerator
 
 def read_source_code_from_file(file_path):
 	# Reads the source code from a text file.
@@ -32,10 +32,17 @@ if __name__ == '__main__':
 			continue
 		print()
 
-		# Syntactic Analysis
-		print(f'Building Parse Tree from token stream')
+		# Syntactic Analysis - build parse tree
+		print('Building Parse Tree from token stream')
 		parser = LL1Parser(tokens)
 		parser.parse()
 		parser.printParseTree()
+		print()
+
+		# Syntactic Analysis - build AST
+		print('Building AST from Parse Tree')
+		astGen = ASTGenerator(parser.parse_tree)
+		astGen.buildAst(astGen.parse_tree)
+		astGen.printAst()
 
 
