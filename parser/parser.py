@@ -120,6 +120,27 @@ class ASTGenerator:
 						children.append(next_node)
 			return TreeNode(NonTerminals.Assignment.name, children)
 
+		# PrintStmt
+		elif parse_tree_node.label == NonTerminals.PrintStmt.name:
+			children = []
+			for node in parse_tree_node.children:
+				next_node = self.buildAst(node)
+				if next_node:
+					children.append(next_node)
+			return TreeNode(NonTerminals.PrintStmt.name, children)
+
+		# IfStmt
+		elif parse_tree_node.label == NonTerminals.IfStmt.name:
+			children = []
+			for node in parse_tree_node.children:
+				if node.label == NonTerminals.Expression.name or node.label == NonTerminals.Statement.name:
+					children.append(self.buildAst(node))
+				else:
+					next_node = self.buildAst(node)
+					if next_node:
+						children.append(next_node)
+			return TreeNode(NonTerminals.PrintStmt.name, children)
+
 		# Expression
 		elif parse_tree_node.label == NonTerminals.Expression.name:
 			return self.buildAst(parse_tree_node.children[0])  # expression has a single child
