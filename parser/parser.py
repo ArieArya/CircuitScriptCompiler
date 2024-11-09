@@ -1,7 +1,8 @@
-from tokenizer import Token
-from enums import TokenClass, NonTerminals
-from ast import ASTNode
-from ll1_parse_table import LL1_PARSE_TABLE
+from lexer.tokenizer import Token
+from lexer.enums import TokenClass
+from parser.enums import NonTerminals
+from parser.ast import ASTNode
+from parser.ll1_parse_table import LL1_PARSE_TABLE
 
 # Token Classes where we don't need to check actual lexemes
 standalone_token_classes = set([TokenClass.IDENTIFIER, TokenClass.DIGIT])

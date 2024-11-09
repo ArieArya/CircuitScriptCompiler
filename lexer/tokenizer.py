@@ -1,5 +1,5 @@
-from dfa import DFA
-from enums import TokenClass
+from lexer.dfa import DFA
+from lexer.enums import TokenClass
 
 class Token:
 	def __init__(self, token_class, lexeme):

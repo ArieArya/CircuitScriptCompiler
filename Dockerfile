@@ -5,7 +5,7 @@ FROM python:3.9-slim
 WORKDIR /app
 
 # Copy Python scripts into the container
-COPY tokenizer.py tester.py dfa.py .
+COPY . .
 
 # Copy sample_code directory into the container
 COPY sample_code/ sample_code/

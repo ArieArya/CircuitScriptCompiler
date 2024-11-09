@@ -1,5 +1,6 @@
-from tokenizer import Token
-from enums import TokenClass, NonTerminals
+from lexer.tokenizer import Token
+from lexer.enums import TokenClass
+from parser.enums import NonTerminals
 
 LL1_PARSE_TABLE = {
 	# Program

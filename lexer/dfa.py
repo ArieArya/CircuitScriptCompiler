@@ -2,7 +2,6 @@ from enum import Enum
 from collections import defaultdict
 import string
 
-
 class DFA:
     def __init__(self):
         # TODO: Make this work with keywords that share the same first letter.

@@ -1,5 +1,5 @@
 import os
-from tokenizer import Tokenizer
+from lexer import Tokenizer
 from parser import LL1Parser
 
 def read_source_code_from_file(file_path):
