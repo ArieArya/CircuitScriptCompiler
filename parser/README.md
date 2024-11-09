@@ -41,7 +41,7 @@ Arguments       -> Expression Arguments'
 Arguments'      -> COMMA Arguments | ε
 ```
 
-From here, we can construct an LL(1) Parsing table that maps current terminal to the next production rule.
+From here, we can construct an LL(1) Parsing table that maps current terminal to the next production rule. This is implemented in `ll1_parse_table.py`.
 
 | **Non-Terminal**   | `KEYWORD("wire")`                   | `KEYWORD("reg")`                                | `KEYWORD("lut")`                                       | `IDENTIFIER`                          | `KEYWORD("print")`                          | `KEYWORD("if")`                                                              | `KEYWORD("and")`                   | `KEYWORD("or")`                    | `KEYWORD("not")`                   | `KEYWORD("xor")`                   | `KEYWORD("nand")`                  | `DIGIT`                 | `SEMICOLON` | `RPAREN` | `COMMA`            | `OPERATOR("=")` | `OPERATOR("==")` | `$` |
 | ------------------ | ----------------------------------- | ----------------------------------------------- | ------------------------------------------------------ | ------------------------------------- | ------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------- | ---------------------------------- | ---------------------------------- | ---------------------------------- | ---------------------------------- | ----------------------- | ----------- | -------- | ------------------ | --------------- | ---------------- | --- |
