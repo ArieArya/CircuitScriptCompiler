@@ -17,7 +17,7 @@ class ASTGenerator:
     def build_ast(self, parse_tree_node):
         # Terminal Node - return itself
         if (
-            type(parse_tree_node.label) == Token
+            isinstance(parse_tree_node.label, Token)
             and parse_tree_node.label.token_class not in ignore_token_classes
         ):
             return parse_tree_node
@@ -58,7 +58,7 @@ class ASTGenerator:
         elif parse_tree_node.label == NonTerminals.Assignment.name:
             children = []
             for node in parse_tree_node.children:
-                if type(node.label) == NonTerminals:
+                if isinstance(node.label, NonTerminals):
                     children.append(self.build_ast(node))
                 else:
                     next_node = self.build_ast(node)
@@ -128,13 +128,16 @@ class ASTGenerator:
                     argument_list.extend(self.build_ast(node))
             return argument_list
 
-    def print_ast(self):
-        # Perform DFS to printAST
+    def __str__(self):
+        result = ''
+
+        # Perform DFS to print AST.
         stack = [(self.ast, 0)]
         while stack:
             cur_node, depth = stack.pop()
-            print(' ' * depth + '|-> ' + str(cur_node))  # print with indentation
+            result += '  ' * depth + '|-> ' + str(cur_node) + '\n'
 
-            # iterate over next nodes
-            for child_node in cur_node.children[::-1]:  # reverse so we traverse DFS correctly
+            for child_node in cur_node.children[::-1]:  # Reverse so we traverse DFS correctly.
                 stack.append((child_node, depth + 1))
+
+        return result

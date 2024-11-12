@@ -13,14 +13,11 @@ class LL1Parser:
         self.tokens = tokens
         self.position = 0
         self.stack = []  # to perform DFS
-        self.parse_tree = None  # Root of parse tree
 
     # Recursively performs parsing
     def parse(self, non_terminal=NonTerminals.Program, start=True):
         root_node = TreeNode(non_terminal.name)
         current_token = self.peek()
-        if start:
-            self.parse_tree = root_node
 
         # obtain next production from parse table
         if current_token.token_class in standalone_token_classes:
@@ -36,14 +33,14 @@ class LL1Parser:
             if production == 'ε':
                 continue  # ignore ε
             elif str(production) == str(current_token) or (
-                type(production) == TokenClass
+                isinstance(production, TokenClass)
                 and production == current_token.token_class
                 and production in standalone_token_classes
             ):
                 root_node.add_child(TreeNode(current_token))
                 self.advance()  # move to next token
                 current_token = self.peek()
-            elif type(production) == NonTerminals:
+            elif isinstance(production, NonTerminals):
                 # perform DFS and recursively build parse tree
                 root_node.add_child(self.parse(production, False))
                 current_token = self.peek()
@@ -64,9 +61,9 @@ class LL1Parser:
     def advance(self):
         self.position += 1
 
-    def print_parse_tree(self):
+    def print_parse_tree(parse_tree):
         # Perform DFS to print parse tree
-        stack = [(self.parse_tree, 0)]
+        stack = [(parse_tree, 0)]
         while stack:
             cur_node, depth = stack.pop()
             print(' ' * depth + '|-> ' + str(cur_node))  # print with indentation

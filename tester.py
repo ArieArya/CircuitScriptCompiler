@@ -44,6 +44,6 @@ if __name__ == '__main__':
 
         # Syntactic Analysis - build AST
         print('Building AST from Parse Tree')
-        astGen = ASTGenerator(parser.parse_tree)
-        astGen.build_ast(astGen.parse_tree)
-        astGen.print_ast()
+        ast_gen = ASTGenerator(parser.parse_tree)
+        ast_gen.build_ast(ast_gen.parse_tree)
+        print(ast_gen)
