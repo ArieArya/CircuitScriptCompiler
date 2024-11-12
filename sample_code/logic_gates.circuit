@@ -1,9 +1,9 @@
-print(and(1, 1) == 1);
-print(and(0, 1) == 0);
+print(and(1, 1));
+print(and(0, 1));
 
-print(or(0, 1) == 1);
-print(or(0, 0) == 0);
+print(or(0, 1));
+print(or(0, 0));
 
-print(not(0) == 1);
+print(not(0));
 
-print(xor(0, 1) == 1);
+print(xor(0, 1));

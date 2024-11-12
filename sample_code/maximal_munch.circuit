@@ -1,4 +1,2 @@
-=====
-
-wire wire123;
+wire wire123 = or(orr, andd);
 reg r1 = and(andd, orr);

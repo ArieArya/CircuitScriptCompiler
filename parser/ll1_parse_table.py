@@ -29,15 +29,17 @@ LL1_PARSE_TABLE = {
     ( NonTerminals.Statement, str(Token(TokenClass.KEYWORD, "if")) ): [ NonTerminals.IfStmt ],
 
 	# Declaration
-    ( NonTerminals.Declaration, str(Token(TokenClass.KEYWORD, "wire")) ): [ Token(TokenClass.KEYWORD, "wire"), TokenClass.IDENTIFIER ],
-    ( NonTerminals.Declaration, str(Token(TokenClass.KEYWORD, "reg")) ): [ Token(TokenClass.KEYWORD, "reg"), TokenClass.IDENTIFIER, Token(TokenClass.OPERATOR, "="), TokenClass.DIGIT ],
+    # ( NonTerminals.Declaration, str(Token(TokenClass.KEYWORD, "wire")) ): [ Token(TokenClass.KEYWORD, "wire"), TokenClass.IDENTIFIER ],  # not a valid LL1 parse table if this is included (need left factoring)
+	# ( NonTerminals.Declaration, str(Token(TokenClass.KEYWORD, "reg")) ): [ Token(TokenClass.KEYWORD, "reg"), TokenClass.IDENTIFIER ],  # not a valid LL1 parse table if this is included (need left factoring)
+	( NonTerminals.Declaration, str(Token(TokenClass.KEYWORD, "wire")) ): [ Token(TokenClass.KEYWORD, "wire"), TokenClass.IDENTIFIER, Token(TokenClass.OPERATOR, "="), NonTerminals.Expression ],
+    ( NonTerminals.Declaration, str(Token(TokenClass.KEYWORD, "reg")) ): [ Token(TokenClass.KEYWORD, "reg"), TokenClass.IDENTIFIER, Token(TokenClass.OPERATOR, "="), NonTerminals.Expression ],
     ( NonTerminals.Declaration, str(Token(TokenClass.KEYWORD, "lut")) ): [ Token(TokenClass.KEYWORD, "lut"), Token(TokenClass.LPAREN, "("), NonTerminals.Arguments, Token(TokenClass.RPAREN, ")"), NonTerminals.StatementList ],
 
 	# Assignment
     ( NonTerminals.Assignment, TokenClass.IDENTIFIER ): [ TokenClass.IDENTIFIER, Token(TokenClass.OPERATOR, "="), NonTerminals.Expression ],
 
 	# PrintStmt
-    ( NonTerminals.PrintStmt, str(Token(TokenClass.KEYWORD, "print")) ): [ Token(TokenClass.KEYWORD, "print"), Token(TokenClass.LPAREN, "("), TokenClass.IDENTIFIER, Token(TokenClass.RPAREN, ")") ],
+    ( NonTerminals.PrintStmt, str(Token(TokenClass.KEYWORD, "print")) ): [ Token(TokenClass.KEYWORD, "print"), Token(TokenClass.LPAREN, "("),  NonTerminals.Expression, Token(TokenClass.RPAREN, ")") ],
 
 	# IfStmt
     ( NonTerminals.IfStmt, str(Token(TokenClass.KEYWORD, "if")) ): [ Token(TokenClass.KEYWORD, "if"), Token(TokenClass.LPAREN, "("), NonTerminals.Expression, Token(TokenClass.OPERATOR, "=="), NonTerminals.Expression, Token(TokenClass.RPAREN, ")"), NonTerminals.Statement ],

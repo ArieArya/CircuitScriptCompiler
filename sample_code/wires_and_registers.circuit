@@ -1,7 +1,7 @@
-wire w1;
-wire w2;
 reg r1 = 1;
 reg r2 = 0;
+wire w1 = r1;
+wire w2 = r2;
 
 w1 = or(r1, r2);
 w2 = and(r1, r2);

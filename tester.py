@@ -18,7 +18,7 @@ if __name__ == '__main__':
 
 		# Lexical Analysis
 		print(f'Lexing file: {filename}')
-		source_code = read_source_code_from_file('sample_code/wires_and_registers.circuit')
+		source_code = read_source_code_from_file(f'sample_code/{filename}')
 		tokenizer = Tokenizer(source_code)
 		tokens, errors = tokenizer.tokenize()
 		print('Tokens:')
@@ -29,6 +29,7 @@ if __name__ == '__main__':
 			print('Errors:')
 			for lexeme, idx in errors:
 				print(f'Error parsing {repr(lexeme)} at index {idx}.')
+			print()
 			continue
 		print()
 
