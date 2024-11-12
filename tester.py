@@ -19,31 +19,17 @@ if __name__ == '__main__':
             continue
 
         # Lexical Analysis
-        print(f'Lexing file: {filename}')
         source_code = read_source_code_from_file(f'sample_code/{filename}')
         tokenizer = Tokenizer(source_code)
         tokens, errors = tokenizer.tokenize()
-        print('Tokens:')
-        for token in tokens:
-            print(token)
-        if errors:
-            print()
-            print('Errors:')
-            for lexeme, idx in errors:
-                print(f'Error parsing {repr(lexeme)} at index {idx}.')
-            print()
-            continue
-        print()
 
         # Syntactic Analysis - build parse tree
-        print('Building Parse Tree from token stream')
         parser = LL1Parser(tokens)
-        parser.parse()
-        parser.print_parse_tree()
-        print()
+        parse_tree = parser.parse()
 
         # Syntactic Analysis - build AST
-        print('Building AST from Parse Tree')
-        ast_gen = ASTGenerator(parser.parse_tree)
+        ast_gen = ASTGenerator(parse_tree)
         ast_gen.build_ast(ast_gen.parse_tree)
-        print(ast_gen)
+
+        with open(f'sample_code/tester_output/{filename}.txt', 'w') as f:
+            f.write(str(ast_gen))

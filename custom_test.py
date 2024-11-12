@@ -8,7 +8,6 @@ tokens, errors = tokenizer.tokenize()
 
 parser = LL1Parser(tokens)
 parse_tree = parser.parse()
-# LL1Parser.print_parse_tree(parse_tree)
 
 ast_gen = ASTGenerator(parse_tree)
 ast_gen.build_ast(ast_gen.parse_tree)

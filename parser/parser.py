@@ -52,11 +52,10 @@ class LL1Parser:
         return root_node
 
     def peek(self):
-        return (
-            self.tokens[self.position]
-            if self.position < len(self.tokens)
-            else Token(TokenClass.KEYWORD, '$')
-        )  # end of token stream
+        if self.position < len(self.tokens):
+            return self.tokens[self.position]
+        else:
+            return Token(TokenClass.KEYWORD, '$')
 
     def advance(self):
         self.position += 1
