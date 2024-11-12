@@ -2,27 +2,27 @@
 
 We can construct a simplified Context-Free Grammar (CFG) for our compiler. The list of terminals are:
 
--   `KEYWORD("wire")`, `KEYWORD("reg")`, `KEYWORD("lut")`, `KEYWORD("and")`, `KEYWORD("or")`, `KEYWORD("not")`, `KEYWORD("xor")`, `KEYWORD("print")`, `KEYWORD("if")`
--   `OPERATOR("=")`, `OPERATOR("==")`
--   `LPAREN`
--   `RPAREN`
--   `SEMICOLON`
--   `COMMA`
--   `DIGIT`
--   `IDENTIFIER`
+- `KEYWORD("wire")`, `KEYWORD("reg")`, `KEYWORD("lut")`, `KEYWORD("and")`, `KEYWORD("or")`, `KEYWORD("not")`, `KEYWORD("xor")`, `KEYWORD("print")`, `KEYWORD("if")`
+- `OPERATOR("=")`, `OPERATOR("==")`
+- `LPAREN`
+- `RPAREN`
+- `SEMICOLON`
+- `COMMA`
+- `DIGIT`
+- `IDENTIFIER`
 
 The list of non-terminals are:
 
--   `Program`: root non-terminal representing the whole program
--   `StatementList`: a sequence of statements / lines in our program
--   `Statement`: a single statement / line of code.
--   `Declaration`: a declaration of wires, registers, or LUTs
--   `Assignment`: an assignment of a value or expression to an identifier
--   `PrintStmt`: a print statement
--   `IfStmt`: an if statement for conditional logic
--   `Expression`: a logical arithmetic expression
--   `GateExpression`: logical gate expressions like `and`, `or`, `xor`, `nand`
--   `Arguments`: arguments for gate expressions or certain keywords (e.g. LUTs)
+- `Program`: root non-terminal representing the whole program
+- `StatementList`: a sequence of statements / lines in our program
+- `Statement`: a single statement / line of code.
+- `Declaration`: a declaration of wires, registers, or LUTs
+- `Assignment`: an assignment of a value or expression to an identifier
+- `PrintStmt`: a print statement
+- `IfStmt`: an if statement for conditional logic
+- `Expression`: a logical arithmetic expression
+- `GateExpression`: logical gate expressions like `and`, `or`, `xor`, `nand`
+- `Arguments`: arguments for gate expressions or certain keywords (e.g. LUTs)
 
 The Context-Free Grammar can be defined below:
 
