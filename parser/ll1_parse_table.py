@@ -156,6 +156,30 @@ LL1_PARSE_TABLE = {
         NonTerminals.Expression,
         NonTerminals.Arguments_,
     ],
+	(NonTerminals.Arguments, str(Token(TokenClass.KEYWORD, 'and'))): [
+        NonTerminals.Expression,
+        NonTerminals.Arguments_,
+    ],
+	(NonTerminals.Arguments, str(Token(TokenClass.KEYWORD, 'or'))): [
+        NonTerminals.Expression,
+        NonTerminals.Arguments_,
+    ],
+	(NonTerminals.Arguments, str(Token(TokenClass.KEYWORD, 'not'))): [
+        NonTerminals.Expression,
+        NonTerminals.Arguments_,
+    ],
+	(NonTerminals.Arguments, str(Token(TokenClass.KEYWORD, 'xor'))): [
+        NonTerminals.Expression,
+        NonTerminals.Arguments_,
+    ],
+	(NonTerminals.Arguments, str(Token(TokenClass.KEYWORD, 'nand'))): [
+        NonTerminals.Expression,
+        NonTerminals.Arguments_,
+    ],
+	(NonTerminals.Arguments, TokenClass.DIGIT): [
+        NonTerminals.Expression,
+        NonTerminals.Arguments_,
+    ],
     (NonTerminals.Arguments, TokenClass.DIGIT): [NonTerminals.Expression, NonTerminals.Arguments_],
     # Arguments_
     (NonTerminals.Arguments_, str(Token(TokenClass.COMMA, ','))): [
