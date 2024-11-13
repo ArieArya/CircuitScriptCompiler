@@ -1,0 +1,7 @@
+KEYWORD("reg")
+IDENTIFIER("r1")
+OPERATOR("=")
+KEYWORD("and")
+KEYWORD("or")
+KEYWORD("not")
+SEMICOLON(";")

@@ -1,0 +1,3 @@
+Error parsing '-' at index 12.
+Error parsing '!' at index 34.
+Error parsing '2' at index 58.
