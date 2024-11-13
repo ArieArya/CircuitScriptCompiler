@@ -10,10 +10,6 @@ ignore_token_classes = set(
 
 
 class ASTGenerator:
-    def __init__(self, parse_tree):
-        self.parse_tree = parse_tree
-        self.ast = None
-
     def build_ast(self, parse_tree_node):
         # Terminal Node - return itself
         if (
@@ -24,10 +20,7 @@ class ASTGenerator:
 
         # Program Node - main program node
         elif parse_tree_node.label == NonTerminals.Program.name:
-            self.ast = TreeNode(
-                NonTerminals.Program.name, self.build_ast(parse_tree_node.children[0])
-            )  # only has 1 child
-            return self.ast
+            return TreeNode(NonTerminals.Program.name, self.build_ast(parse_tree_node.children[0]))
 
         # StatementList Node - returns list of statements
         elif parse_tree_node.label == NonTerminals.StatementList.name:
@@ -41,9 +34,7 @@ class ASTGenerator:
 
         # Statement Node
         elif parse_tree_node.label == NonTerminals.Statement.name:
-            return self.build_ast(
-                parse_tree_node.children[0]
-            )  # statement node only has a single child
+            return self.build_ast(parse_tree_node.children[0])
 
         # Declaration Node
         elif parse_tree_node.label == NonTerminals.Declaration.name:
@@ -128,11 +119,9 @@ class ASTGenerator:
                     argument_list.extend(self.build_ast(node))
             return argument_list
 
-    def __str__(self):
+    def ast_to_str(ast):
         result = ''
-
-        # Perform DFS to print AST.
-        stack = [(self.ast, 0)]
+        stack = [(ast, 0)]
         while stack:
             cur_node, depth = stack.pop()
             result += '  ' * depth + '|-> ' + str(cur_node) + '\n'

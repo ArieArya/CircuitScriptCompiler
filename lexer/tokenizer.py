@@ -1,13 +1,15 @@
 from lexer.dfa import DFA
 from lexer.enums import TokenClass
 
-class Token:
-	def __init__(self, token_class, lexeme):
-		self.token_class = token_class
-		self.lexeme = lexeme
 
-	def __str__(self):
-		return f'{self.token_class}("{self.lexeme}")'
+class Token:
+    def __init__(self, token_class, lexeme):
+        self.token_class = token_class
+        self.lexeme = lexeme
+
+    def __str__(self):
+        return f'{self.token_class.name}("{self.lexeme}")'
+
 
 class Tokenizer:
     def __init__(self, source_code):
@@ -83,3 +85,15 @@ class Tokenizer:
 
     def eof(self, idx):
         return idx == self.length
+
+    def tokens_to_str(tokens):
+        result = ''
+        for token in tokens:
+            result += f'{token}\n'
+        return result
+
+    def errors_to_str(errors):
+        result = ''
+        for lexeme, idx in errors:
+            result += f'Error parsing {repr(lexeme)} at index {idx}.\n'
+        return result

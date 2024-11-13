@@ -3,33 +3,64 @@ from lexer import Tokenizer
 from parser import LL1Parser, ASTGenerator
 
 
-def read_source_code_from_file(file_path):
-    # Reads the source code from a text file.
+def read(file_path):
     with open(file_path, 'r') as file:
         return file.read()
 
 
-if __name__ == '__main__':
-    source_code_dir = 'sample_code'
+def write(file_path, s):
+    with open(file_path, 'w') as file:
+        return file.write(s)
 
-    for filename in sorted(os.listdir(source_code_dir)):
-        file_path = os.path.join(source_code_dir, filename)
 
-        if not os.path.isfile(file_path):
+def main():
+    """
+    Runs the lexer, parser, and AST generator on each .circuit file in the 'sample_code' directory.
+
+    Per-phase outputs are generated inside of the 'sample_code/tester_output' directory.
+
+    If any phase fails, the error will be outputted and subsequent phases will not run.
+    """
+
+    src_dir = 'sample_code'
+
+    for filename in sorted(os.listdir(src_dir)):
+        file_path = os.path.join(src_dir, filename)
+        filename_no_ext, ext = os.path.splitext(filename)
+
+        if not os.path.isfile(file_path) or ext != '.circuit':
             continue
 
+        test_output_dir = os.path.join(src_dir, 'tester_output', filename_no_ext)
+        os.makedirs(test_output_dir, exist_ok=True)
+        lexer_path = os.path.join(test_output_dir, 'lexer.txt')
+        parser_path = os.path.join(test_output_dir, 'parser.txt')
+        ast_path = os.path.join(test_output_dir, 'ast.txt')
+
         # Lexical Analysis
-        source_code = read_source_code_from_file(f'sample_code/{filename}')
+        source_code = read(f'sample_code/{filename}')
         tokenizer = Tokenizer(source_code)
         tokens, errors = tokenizer.tokenize()
+        if not errors:
+            write(lexer_path, Tokenizer.tokens_to_str(tokens))
+        else:
+            write(lexer_path, Tokenizer.errors_to_str(errors))
+            continue
 
         # Syntactic Analysis - build parse tree
         parser = LL1Parser(tokens)
-        parse_tree = parser.parse()
+        try:
+            parse_tree = parser.parse()
+            write(parser_path, LL1Parser.parse_tree_to_str(parse_tree))
+        except Exception as err:
+            write(parser_path, f'Parse error: {err}')
+            continue
 
         # Syntactic Analysis - build AST
-        ast_gen = ASTGenerator(parse_tree)
-        ast_gen.build_ast(ast_gen.parse_tree)
+        ast_gen = ASTGenerator()
+        ast = ast_gen.build_ast(parse_tree)
+        write(ast_path, ASTGenerator.ast_to_str(ast))
 
-        with open(f'sample_code/tester_output/{filename}.txt', 'w') as f:
-            f.write(str(ast_gen))
+
+if __name__ == '__main__':
+    main()
