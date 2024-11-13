@@ -63,7 +63,7 @@ class LL1Parser:
         stack = [(parse_tree, 0)]
         while stack:
             cur_node, depth = stack.pop()
-            result += ' ' * depth + '|-> ' + str(cur_node) + '\n'
+            result += '  ' * depth + '|-> ' + str(cur_node) + '\n'
 
             for child_node in cur_node.children[::-1]:  # Reverse so we traverse DFS correctly.
                 stack.append((child_node, depth + 1))
