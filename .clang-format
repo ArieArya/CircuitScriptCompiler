@@ -1,0 +1,20 @@
+IndentWidth: 4
+TabWidth: 4
+ColumnLimit: 99
+AllowShortBlocksOnASingleLine: Empty
+AllowShortFunctionsOnASingleLine: Empty
+AllowShortIfStatementsOnASingleLine: AllIfsAndElse
+AllowShortLoopsOnASingleLine: true
+SpacesBeforeTrailingComments: 2
+AccessModifierOffset: -4
+PointerAlignment: Left
+AlignTrailingComments: true
+
+# Experimental options.
+BinPackParameters: false
+PackConstructorInitializers: NextLine
+PenaltyReturnTypeOnItsOwnLine: 200
+AlwaysBreakTemplateDeclarations: Yes
+
+# Removed options.
+# FixNamespaceComments: false

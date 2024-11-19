@@ -2,3 +2,7 @@ __pycache__/
 *.aux
 *.log
 *.pdf
+
+# clangd files
+.cache/
+.build/
