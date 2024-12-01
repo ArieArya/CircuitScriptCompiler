@@ -6,7 +6,7 @@ class DFA:
     def __init__(self):
         # TODO: Make this work with keywords that share the same first letter.
         # TODO: Add `nand` after we do.
-        self.KEYWORDS = ['wire', 'reg', 'and', 'or', 'not', 'xor', 'print', 'if']
+        self.KEYWORDS = ['wire', 'reg', 'and', 'or', 'not', 'nand', 'xor', 'print']
         KEYWORD_STATES = []
         for keyword in self.KEYWORDS:
             for i in range(len(keyword)):

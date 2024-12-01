@@ -1,2 +1,7 @@
+reg orr = 1;
+reg andd = 0;
 wire wire123 = or(orr, andd);
-reg r1 = and(andd, orr);
+wire w1 = and(andd, orr);
+
+print(w1)
+print(wire123)

@@ -1,1 +1,1 @@
-reg r1 = and(or(0, 1), 1);
+wire w1 = and(or(0, 1), 1);

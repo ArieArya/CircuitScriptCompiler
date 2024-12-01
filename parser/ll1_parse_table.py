@@ -46,7 +46,6 @@ LL1_PARSE_TABLE = {
     (NonTerminals.Statement, str(Token(TokenClass.KEYWORD, 'wire'))): [NonTerminals.Declaration],
     (NonTerminals.Statement, str(Token(TokenClass.KEYWORD, 'reg'))): [NonTerminals.Declaration],
     (NonTerminals.Statement, str(Token(TokenClass.KEYWORD, 'lut'))): [NonTerminals.Declaration],
-    (NonTerminals.Statement, TokenClass.IDENTIFIER): [NonTerminals.Assignment],
     (NonTerminals.Statement, str(Token(TokenClass.KEYWORD, 'print'))): [NonTerminals.PrintStmt],
     (NonTerminals.Statement, str(Token(TokenClass.KEYWORD, 'if'))): [NonTerminals.IfStmt],
     # Declaration
@@ -71,12 +70,6 @@ LL1_PARSE_TABLE = {
         Token(TokenClass.RPAREN, ')'),
         NonTerminals.StatementList,
     ],
-    # Assignment
-    (NonTerminals.Assignment, TokenClass.IDENTIFIER): [
-        TokenClass.IDENTIFIER,
-        Token(TokenClass.OPERATOR, '='),
-        NonTerminals.Expression,
-    ],
     # PrintStmt
     (NonTerminals.PrintStmt, str(Token(TokenClass.KEYWORD, 'print'))): [
         Token(TokenClass.KEYWORD, 'print'),
@@ -99,9 +92,7 @@ LL1_PARSE_TABLE = {
     (NonTerminals.Expression, str(Token(TokenClass.KEYWORD, 'or'))): [NonTerminals.GateExpression],
     (NonTerminals.Expression, str(Token(TokenClass.KEYWORD, 'not'))): [NonTerminals.GateExpression],
     (NonTerminals.Expression, str(Token(TokenClass.KEYWORD, 'xor'))): [NonTerminals.GateExpression],
-    (NonTerminals.Expression, str(Token(TokenClass.KEYWORD, 'nand'))): [
-        NonTerminals.GateExpression
-    ],
+    (NonTerminals.Expression, str(Token(TokenClass.KEYWORD, 'nand'))): [NonTerminals.GateExpression],
     (NonTerminals.Expression, TokenClass.IDENTIFIER): [TokenClass.IDENTIFIER],
     (NonTerminals.Expression, TokenClass.DIGIT): [TokenClass.DIGIT],
     # GateExpression
