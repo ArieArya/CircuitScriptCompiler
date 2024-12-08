@@ -1,3 +1,3 @@
 from .code_generator import CodeGenerator
 
-__all__ = ["CodeGenerator"]
+__all__ = ['CodeGenerator']
