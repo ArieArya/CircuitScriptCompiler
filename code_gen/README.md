@@ -56,7 +56,11 @@ MOV out, t7
 PRINT out
 ```
 
-TODO -> add steps on running VM
+After running on the VM, we get the following output:
+
+```
+out = 1
+```
 
 ---
 
@@ -109,7 +113,11 @@ MOV out, t7
 PRINT out
 ```
 
-TODO -> add steps on running VM
+After running on the VM, we get the following output:
+
+```
+out = 1
+```
 
 ---
 
@@ -154,4 +162,8 @@ MOV out, t7
 PRINT out
 ```
 
-TODO -> add steps on running VM
+After running on the VM, we get the following output:
+
+```
+out = 0
+```
