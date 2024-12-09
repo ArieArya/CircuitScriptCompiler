@@ -42,31 +42,45 @@ void process_instruction(InstructionType instr_type, const std::vector<std::stri
     case InstructionType::kLoad: {
         assert(args.size() == 2);
 
-        fmt::println("{} := {}", args[0], args[1]);
+        bool val = get_argument_value(args[1]);
+        symbol_table[args[0]] = val;
         break;
     }
     case InstructionType::kMove: {
         assert(args.size() == 2);
 
-        fmt::println("{} <- {}", args[0], args[1]);
+        bool val = get_argument_value(args[1]);
+        symbol_table[args[0]] = val;
         break;
     }
     case InstructionType::kAnd: {
         assert(args.size() == 3);
 
-        fmt::println("{} <- and({}, {})", args[0], args[1], args[2]);
+        bool val1 = get_argument_value(args[1]);
+        bool val2 = get_argument_value(args[2]);
+        symbol_table[args[0]] = val1 && val2;
         break;
     }
     case InstructionType::kOr: {
         assert(args.size() == 3);
 
-        fmt::println("{} <- or({}, {})", args[0], args[1], args[2]);
+        bool val1 = get_argument_value(args[1]);
+        bool val2 = get_argument_value(args[2]);
+        symbol_table[args[0]] = val1 || val2;
         break;
     }
     case InstructionType::kNot: {
         assert(args.size() == 2);
 
-        fmt::println("{} <- not({})", args[0], args[1]);
+        bool val = get_argument_value(args[1]);
+        symbol_table[args[0]] = !val;
+        break;
+    }
+    case InstructionType::kPrint: {
+        assert(args.size() == 1);
+
+        bool val = get_argument_value(args[0]);
+        fmt::println("{}", val);
         break;
     }
     default: {
@@ -88,4 +102,7 @@ int main() {
         auto instr = instruction::from_string(instr_str);
         process_instruction(instr, args);
     }
+
+    // TODO: Debug use; remove this.
+    fmt::println("{}", symbol_table);
 }
