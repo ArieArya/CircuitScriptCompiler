@@ -1,41 +1,33 @@
 |-> Program
   |-> Declaration
     |-> KEYWORD("reg")
-    |-> IDENTIFIER("r1")
+    |-> IDENTIFIER("orr")
     |-> OPERATOR("=")
     |-> DIGIT("1")
   |-> Declaration
     |-> KEYWORD("reg")
-    |-> IDENTIFIER("r2")
+    |-> IDENTIFIER("andd")
     |-> OPERATOR("=")
     |-> DIGIT("0")
   |-> Declaration
     |-> KEYWORD("wire")
-    |-> IDENTIFIER("w1")
-    |-> OPERATOR("=")
-    |-> IDENTIFIER("r1")
-  |-> Declaration
-    |-> KEYWORD("wire")
-    |-> IDENTIFIER("w2")
-    |-> OPERATOR("=")
-    |-> IDENTIFIER("r2")
-  |-> Assignment
-    |-> IDENTIFIER("w1")
+    |-> IDENTIFIER("wire123")
     |-> OPERATOR("=")
     |-> GateExpression
       |-> KEYWORD("or")
-      |-> IDENTIFIER("r1")
-      |-> IDENTIFIER("r2")
-  |-> Assignment
-    |-> IDENTIFIER("w2")
+      |-> IDENTIFIER("orr")
+      |-> IDENTIFIER("andd")
+  |-> Declaration
+    |-> KEYWORD("wire")
+    |-> IDENTIFIER("w1")
     |-> OPERATOR("=")
     |-> GateExpression
       |-> KEYWORD("and")
-      |-> IDENTIFIER("r1")
-      |-> IDENTIFIER("r2")
+      |-> IDENTIFIER("andd")
+      |-> IDENTIFIER("orr")
   |-> PrintStmt
     |-> KEYWORD("print")
     |-> IDENTIFIER("w1")
   |-> PrintStmt
     |-> KEYWORD("print")
-    |-> IDENTIFIER("w2")
+    |-> IDENTIFIER("wire123")

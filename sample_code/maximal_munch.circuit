@@ -3,5 +3,5 @@ reg andd = 0;
 wire wire123 = or(orr, andd);
 wire w1 = and(andd, orr);
 
-print(w1)
-print(wire123)
+print(w1);
+print(wire123);

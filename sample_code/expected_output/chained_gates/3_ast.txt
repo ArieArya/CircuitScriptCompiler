@@ -1,0 +1,12 @@
+|-> Program
+  |-> Declaration
+    |-> KEYWORD("wire")
+    |-> IDENTIFIER("w1")
+    |-> OPERATOR("=")
+    |-> GateExpression
+      |-> KEYWORD("and")
+      |-> GateExpression
+        |-> KEYWORD("or")
+        |-> DIGIT("0")
+        |-> DIGIT("1")
+      |-> DIGIT("1")

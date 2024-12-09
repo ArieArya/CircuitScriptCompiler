@@ -38,7 +38,8 @@ def main():
 		lexer_path = os.path.join(test_output_dir, '1_lexer.txt')
 		parser_path = os.path.join(test_output_dir, '2_parser.txt')
 		ast_path = os.path.join(test_output_dir, '3_ast.txt')
-		codegen_path = os.path.join(test_output_dir, '4_codegen.txt')
+		semantic_path = os.path.join(test_output_dir, '4_semantic_check.txt')
+		codegen_path = os.path.join(test_output_dir, '5_codegen.txt')
 
 		# Lexical Analysis
 		source_code = read(f'sample_code/{filename}')
@@ -67,14 +68,18 @@ def main():
 		# Semantic Analysis - type Check AST
 		try:
 			ast_gen.semantic_check(ast)
+			write(semantic_path, 'Semantic check successful')
 		except Exception as err:
-			write(codegen_path, f'Semantic check error: {err}')
+			write(semantic_path, f'Semantic check error: {err}')
 			continue
 
 		# Code Generation - generate intermediate code
-		code_generator = CodeGenerator(ast)
-		code_generator.generate_ir()
-		write(codegen_path, code_generator.get_code_str())
+		try:
+			code_generator = CodeGenerator(ast)
+			code_generator.generate_ir()
+			write(codegen_path, code_generator.get_code_str())
+		except Exception as err:
+			write(codegen_path, f'Code generation error: {err}')
 
 
 if __name__ == '__main__':

@@ -1,0 +1,18 @@
+AND t1, 1, 1
+MOV w1, t1
+AND t2, 0, 1
+MOV w2, t2
+OR t3, 0, 1
+MOV w3, t3
+OR t4, 0, 0
+MOV w4, t4
+NOT t5, w4
+MOV w5, t5
+XOR t6, 0, 1
+MOV w6, t6
+PRINT w1
+PRINT w2
+PRINT w3
+PRINT w4
+PRINT w5
+PRINT w6

@@ -1,0 +1,3 @@
+OR t1, 0, 1
+AND t2, t1, 1
+MOV w1, t2

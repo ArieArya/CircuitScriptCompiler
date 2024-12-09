@@ -1,9 +1,13 @@
-print(and(1, 1));
-print(and(0, 1));
+wire w1 = and(1, 1);
+wire w2 = and(0, 1);
+wire w3 = or(0, 1);
+wire w4 = or(0, 0);
+wire w5 = not(w4);
+wire w6 = xor(0, 1);
 
-print(or(0, 1));
-print(or(0, 0));
-
-print(not(0));
-
-print(xor(0, 1));
+print(w1);
+print(w2);
+print(w3);
+print(w4);
+print(w5);
+print(w6);
