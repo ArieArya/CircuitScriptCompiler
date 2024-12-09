@@ -1,11 +1,9 @@
 project('circuit-script-compiler', 'cpp',
   version: '0.1.0',
   license: 'MIT',
-  default_options: ['cpp_std=c++20']
+  default_options: ['cpp_std=c++17']
 )
 
-# This is required for std::format library.
-add_project_arguments('-fexperimental-library', language: 'cpp')
+subdir('third_party/fmt')
 
-# TODO: Rename the executable.
-executable('circuit_script_compiler', 'src/main.cc')
+executable('circuit_script', 'src/main.cc', include_directories: [fmt_include], link_with: [fmt_lib])
