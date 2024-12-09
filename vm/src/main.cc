@@ -12,7 +12,7 @@
 
 using namespace instruction;
 
-// TODO: Clean this up! This is a *very* quick and dirty prototype.
+// TODO: Clean this up! This is a quick and dirty prototype.
 std::unordered_map<std::string, bool> symbol_table;
 
 bool get_argument_value(const std::string& arg) {
@@ -65,12 +65,10 @@ void process_instruction(InstructionType instr_type, const std::vector<std::stri
         assert(args.size() == 1);
 
         bool val = get_argument_value(args[0]);
-        fmt::println("{}", val);
+        fmt::println("{}", static_cast<int>(val));  // Display values as 1 or 0.
         break;
     }
     default: {
-        return;  // TODO: Debug use; remove this.
-
         fmt::println("process_instruction() error: unknown instruction");
         std::abort();
     }
@@ -89,7 +87,4 @@ int main(int argc, char* argv[]) {
         auto instr = instruction::from_string(instr_str);
         process_instruction(instr, args);
     }
-
-    // TODO: Debug use; remove this.
-    fmt::println("{}", symbol_table);
 }
