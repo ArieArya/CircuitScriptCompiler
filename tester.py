@@ -38,8 +38,7 @@ def main():
 		lexer_path = os.path.join(test_output_dir, '1_lexer.txt')
 		parser_path = os.path.join(test_output_dir, '2_parser.txt')
 		ast_path = os.path.join(test_output_dir, '3_ast.txt')
-		semantic_path = os.path.join(test_output_dir, '4_semantic_check.txt')
-		codegen_path = os.path.join(test_output_dir, '5_codegen.txt')
+		codegen_path = os.path.join(test_output_dir, '4_codegen.txt')
 
 		# Lexical Analysis
 		source_code = read(f'sample_code/{filename}')
@@ -64,14 +63,6 @@ def main():
 		ast_gen = ASTGenerator()
 		ast = ast_gen.build_ast(parse_tree)
 		write(ast_path, ast_gen.ast_to_str(ast))
-
-		# Semantic Analysis - type Check AST
-		try:
-			ast_gen.semantic_check(ast)
-			write(semantic_path, 'Semantic check successful')
-		except Exception as err:
-			write(semantic_path, f'Semantic check error: {err}')
-			continue
 
 		# Code Generation - generate intermediate code
 		try:
