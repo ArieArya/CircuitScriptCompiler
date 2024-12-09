@@ -7,5 +7,5 @@ wire w2 = and(r1, r2);
 print(w1);
 print(w2);
 
-wire w3 = nand(w1, w2);
+wire w3 = not(w1);
 print(w3);

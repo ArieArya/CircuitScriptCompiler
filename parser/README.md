@@ -20,8 +20,8 @@ The list of non-terminals are:
 -   `PrintStmt`: a print statement
 -   `IfStmt`: an if statement for conditional logic
 -   `Expression`: a logical arithmetic expression
--   `GateExpression`: logical gate expressions like `and`, `or`, `xor`, `nand`
--   `Arguments`: arguments for gate expressions or certain keywords (e.g. LUTs)
+-   `GateExpression`: logical gate expressions like `and`, `or`, `xor`, `not`
+-   `Arguments`: arguments for gate expressions or certain keywords (e.g. `not(w1, w2)`)
 
 The Context-Free Grammar can be defined below:
 
@@ -35,7 +35,7 @@ PrintStmt       -> KEYWORD("print") LPAREN Expression RPAREN
 IfStmt          -> KEYWORD("if") LPAREN Expression OPERATOR("==") Expression RPAREN Statement
 Expression      -> GateExpression | IDENTIFIER | DIGIT
 GateExpression  -> GateType LPAREN Arguments RPAREN
-GateType        -> KEYWORD("and") | KEYWORD("or") | KEYWORD("not") | KEYWORD("xor") | KEYWORD("nand")
+GateType        -> KEYWORD("and") | KEYWORD("or") | KEYWORD("not") | KEYWORD("xor")
 Arguments       -> Expression Arguments'
 Arguments'      -> COMMA Arguments | ε
 ```

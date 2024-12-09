@@ -1,6 +1,6 @@
 from enum import Enum
 
-# Parser Enum
+# Enum representing different classes of non-terminals in the language
 NonTerminals = Enum(
     'NonTerminals',
     [

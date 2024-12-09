@@ -70,7 +70,6 @@ For the first iteration, we define the following tokens:
 
 -   `wire` - a wire in the digital circuit
 -   `reg` - register
--   `lut` - Lookup Table (LUT)
 -   `and` - AND gate
 -   `or` - OR gate
 -   `not` - NOT gate

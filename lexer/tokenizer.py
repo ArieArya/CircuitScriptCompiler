@@ -1,7 +1,7 @@
 from lexer.dfa import DFA
 from lexer.enums import TokenClass
 
-
+# Represents a token with a class (type) and the actual lexeme (text).
 class Token:
 	def __init__(self, token_class, lexeme):
 		self.token_class = token_class
@@ -13,6 +13,8 @@ class Token:
 	def __repr__(self):
 		return f'{self.token_class.name}("{self.lexeme}")'
 
+
+# Tokenizer class that breaks the source code into tokens.
 class Tokenizer:
 	def __init__(self, source_code):
 		self.dfa = DFA()
@@ -20,6 +22,7 @@ class Tokenizer:
 		self.idx = 0
 		self.length = len(self.src)
 
+		# Mapping DFA states to token classes (types).
 		self.state_to_token_class = {
 			DFA.State.START: TokenClass.WHITESPACE,
 			DFA.State.DIGIT: TokenClass.DIGIT,
@@ -33,6 +36,7 @@ class Tokenizer:
 			DFA.State.WHITESPACE: TokenClass.WHITESPACE,
 		}
 
+		# Add keyword states to the mapping.
 		for keyword in self.dfa.KEYWORDS:
 			n = len(keyword)
 			for i in range(n - 1):
@@ -46,10 +50,12 @@ class Tokenizer:
 			last_state = DFA.State[last_state_str]
 			self.state_to_token_class[last_state] = TokenClass.KEYWORD
 
+	# Function to tokenize the source code into tokens and collect errors.
 	def tokenize(self):
 		tokens = []
 		errors = []
 
+		# Process the source code until the end.
 		while not self.eof(self.idx):
 			lexeme, state = self.recognize_lexeme()
 			if state == DFA.State.WHITESPACE:
@@ -62,6 +68,7 @@ class Tokenizer:
 
 		return tokens, errors
 
+	# Function to recognize a single lexeme starting from the current index.
 	def recognize_lexeme(self):
 		state = DFA.State.START
 		start = self.idx
@@ -72,6 +79,7 @@ class Tokenizer:
 		last_accept_state = None
 		last_accept_end = end
 
+		# Traverse characters until the end of the input or an error state is reached.
 		while not self.eof(end) and state != DFA.State.ERROR:
 			state = self.dfa.transition(state, self.src[end])
 			if self.dfa.accepts(state):
@@ -79,21 +87,28 @@ class Tokenizer:
 				last_accept_end = end
 			end += 1
 
+		# Update the index to the next position after the recognized lexeme.
 		next_idx = end if last_accept_state is None else last_accept_end + 1
-		self.idx = next_idx  # Advance pointer.
+		self.idx = next_idx
 
+		# Extract the lexeme from the source code.
 		lexeme = self.src[start:next_idx]
 		return lexeme, last_accept_state
 
+	# Function to check if the current index is at the end of the source code.
 	def eof(self, idx):
 		return idx == self.length
 
+	# Static method to convert a list of tokens to a string.
+	@staticmethod
 	def tokens_to_str(tokens):
 		result = ''
 		for token in tokens:
 			result += f'{token}\n'
 		return result
 
+	# Static method to convert a list of errors to a string.
+	@staticmethod
 	def errors_to_str(errors):
 		result = ''
 		for lexeme, idx in errors:

@@ -35,10 +35,10 @@ def main():
 
 		test_output_dir = os.path.join(src_dir, 'tester_output', filename_no_ext)
 		os.makedirs(test_output_dir, exist_ok=True)
-		lexer_path = os.path.join(test_output_dir, 'lexer.txt')
-		parser_path = os.path.join(test_output_dir, 'parser.txt')
-		ast_path = os.path.join(test_output_dir, 'ast.txt')
-		codegen_path = os.path.join(test_output_dir, 'codegen.txt')
+		lexer_path = os.path.join(test_output_dir, '1_lexer.txt')
+		parser_path = os.path.join(test_output_dir, '2_parser.txt')
+		ast_path = os.path.join(test_output_dir, '3_ast.txt')
+		codegen_path = os.path.join(test_output_dir, '4_codegen.txt')
 
 		# Lexical Analysis
 		source_code = read(f'sample_code/{filename}')
@@ -62,7 +62,14 @@ def main():
 		# Syntactic Analysis - build AST
 		ast_gen = ASTGenerator()
 		ast = ast_gen.build_ast(parse_tree)
-		write(ast_path, ASTGenerator.ast_to_str(ast))
+		write(ast_path, ast_gen.ast_to_str(ast))
+
+		# Semantic Analysis - type Check AST
+		try:
+			ast_gen.semantic_check(ast)
+		except Exception as err:
+			write(codegen_path, f'Semantic check error: {err}')
+			continue
 
 		# Code Generation - generate intermediate code
 		code_generator = CodeGenerator(ast)

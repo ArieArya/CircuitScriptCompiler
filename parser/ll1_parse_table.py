@@ -2,6 +2,7 @@ from lexer.tokenizer import Token
 from lexer.enums import TokenClass
 from parser.enums import NonTerminals
 
+# LL1 Parse Table for our language (see README for table)
 LL1_PARSE_TABLE = {
     # Program
     (NonTerminals.Program, str(Token(TokenClass.KEYWORD, 'wire'))): [NonTerminals.StatementList],
@@ -92,7 +93,6 @@ LL1_PARSE_TABLE = {
     (NonTerminals.Expression, str(Token(TokenClass.KEYWORD, 'or'))): [NonTerminals.GateExpression],
     (NonTerminals.Expression, str(Token(TokenClass.KEYWORD, 'not'))): [NonTerminals.GateExpression],
     (NonTerminals.Expression, str(Token(TokenClass.KEYWORD, 'xor'))): [NonTerminals.GateExpression],
-    (NonTerminals.Expression, str(Token(TokenClass.KEYWORD, 'nand'))): [NonTerminals.GateExpression],
     (NonTerminals.Expression, TokenClass.IDENTIFIER): [TokenClass.IDENTIFIER],
     (NonTerminals.Expression, TokenClass.DIGIT): [TokenClass.DIGIT],
     # GateExpression
@@ -120,12 +120,6 @@ LL1_PARSE_TABLE = {
         NonTerminals.Arguments,
         str(Token(TokenClass.RPAREN, ')')),
     ],
-    (NonTerminals.GateExpression, str(Token(TokenClass.KEYWORD, 'nand'))): [
-        NonTerminals.GateType,
-        Token(TokenClass.LPAREN, '('),
-        NonTerminals.Arguments,
-        str(Token(TokenClass.RPAREN, ')')),
-    ],
     # GateType
     (NonTerminals.GateType, str(Token(TokenClass.KEYWORD, 'and'))): [
         Token(TokenClass.KEYWORD, 'and')
@@ -138,9 +132,6 @@ LL1_PARSE_TABLE = {
     ],
     (NonTerminals.GateType, str(Token(TokenClass.KEYWORD, 'xor'))): [
         Token(TokenClass.KEYWORD, 'xor')
-    ],
-    (NonTerminals.GateType, str(Token(TokenClass.KEYWORD, 'nand'))): [
-        Token(TokenClass.KEYWORD, 'nand')
     ],
     # Arguments
     (NonTerminals.Arguments, TokenClass.IDENTIFIER): [
@@ -160,10 +151,6 @@ LL1_PARSE_TABLE = {
         NonTerminals.Arguments_,
     ],
     (NonTerminals.Arguments, str(Token(TokenClass.KEYWORD, 'xor'))): [
-        NonTerminals.Expression,
-        NonTerminals.Arguments_,
-    ],
-    (NonTerminals.Arguments, str(Token(TokenClass.KEYWORD, 'nand'))): [
         NonTerminals.Expression,
         NonTerminals.Arguments_,
     ],
