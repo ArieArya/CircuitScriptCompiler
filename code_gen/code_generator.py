@@ -1,6 +1,5 @@
 # Code generator clas that converts an AST into low-level IR
 class CodeGenerator:
-
 	def __init__(self, ast):
 		self.ast = ast
 		self.code = []

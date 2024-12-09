@@ -1,0 +1,11 @@
+reg r1 = 1;
+
+wire w1 = and(r1, r1);
+wire w2 = or(r1, r1);
+wire w3 = not(r1);
+wire w4 = and(w1, w2);
+wire w5 = not(w4);
+wire w6 = or(w2, w3);
+wire out = and(w5, w6);
+
+print(out);

@@ -6,7 +6,7 @@ The DFA below is a partial representation of the language. For brevity, not all 
 
 To reduce verbosity, the φ transition represents the set of all lowercase ASCII letters, digits, and the underscore character, excluding any conflicting transitions the state might already have. For example, the φ transition from the `wire0` state contains 'a'-'z' excluding 'i', 0-9, and '\_'.
 
-![DFA](docs/dfa.webp "DFA")
+![DFA](../docs/dfa.webp "DFA")
 
 ## Code Samples
 
