@@ -12,21 +12,6 @@
 
 using namespace instruction;
 
-namespace {
-std::string kExampleIR = R"(LOAD r1, 1
-LOAD r2, 0
-OR t1, r1, r2
-OR t2, r1, t1
-MOV w1, t2
-AND t3, r1, r2
-MOV w2, t3
-PRINT w1
-PRINT w2
-NOT t4, w1
-MOV w3, t4
-PRINT w3)";
-}
-
 // TODO: Clean this up! This is a *very* quick and dirty prototype.
 std::unordered_map<std::string, bool> symbol_table;
 
@@ -92,8 +77,10 @@ void process_instruction(InstructionType instr_type, const std::vector<std::stri
     }
 }
 
-int main() {
-    std::istringstream ss(kExampleIR);
+int main(int argc, char* argv[]) {
+    std::string file_str = util::read_file(argv[1]);
+
+    std::istringstream ss(file_str);
     std::string line;
     while (std::getline(ss, line)) {
         auto instr_str = util::parse_first_word(line);
