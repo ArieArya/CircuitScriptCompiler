@@ -65,7 +65,7 @@ void process_instruction(InstructionType instr_type, const std::vector<std::stri
         assert(args.size() == 1);
 
         bool val = get_argument_value(args[0]);
-        fmt::println("{}", static_cast<int>(val));  // Display values as 1 or 0.
+        fmt::println("{} = {}", args[0], static_cast<int>(val));  // Display values as 1 or 0.
         break;
     }
     default: {
