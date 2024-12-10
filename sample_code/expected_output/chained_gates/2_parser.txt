@@ -8,13 +8,13 @@
         |-> Expression
           |-> GateExpression
             |-> GateType
-              |-> KEYWORD("and")
+              |-> KEYWORD("or")
             |-> LPAREN("(")
             |-> Arguments
               |-> Expression
                 |-> GateExpression
                   |-> GateType
-                    |-> KEYWORD("or")
+                    |-> KEYWORD("and")
                   |-> LPAREN("(")
                   |-> Arguments
                     |-> Expression
@@ -35,3 +35,12 @@
             |-> RPAREN(")")
     |-> SEMICOLON(";")
     |-> StatementList
+      |-> Statement
+        |-> PrintStmt
+          |-> KEYWORD("print")
+          |-> LPAREN("(")
+          |-> Expression
+            |-> IDENTIFIER("w1")
+          |-> RPAREN(")")
+      |-> SEMICOLON(";")
+      |-> StatementList

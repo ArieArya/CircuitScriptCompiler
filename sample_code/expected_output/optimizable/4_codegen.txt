@@ -1,0 +1,5 @@
+AND t1, 1, 1
+OR t2, 0, t1
+AND t3, 0, t2
+MOV w1, t3
+PRINT w1

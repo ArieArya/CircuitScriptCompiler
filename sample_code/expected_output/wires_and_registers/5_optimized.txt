@@ -1,0 +1,10 @@
+LOAD r1, 1
+LOAD r2, 0
+MOV w1, 1
+AND t1, r1, r2
+MOV w2, t1
+PRINT w1
+PRINT w2
+NOT t2, w1
+MOV w3, t2
+PRINT w3

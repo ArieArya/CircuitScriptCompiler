@@ -1,0 +1,5 @@
+MOV some_wire_1, 0
+MOV some_wire_2, 1
+AND t1, 1, 1
+MOV some_wire_3, t1
+PRINT some_wire_3

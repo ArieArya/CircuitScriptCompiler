@@ -1,7 +1,7 @@
 LOAD r1, 1
 LOAD r2, 0
 OR t1, r1, r2
-OR t2, r1, t1
+OR t2, 1, t1
 MOV w1, t2
 AND t3, r1, r2
 MOV w2, t3

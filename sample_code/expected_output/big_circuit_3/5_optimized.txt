@@ -1,0 +1,16 @@
+LOAD r1, 1
+AND t1, r1, r1
+MOV w1, t1
+OR t2, r1, r1
+MOV w2, t2
+NOT t3, r1
+MOV w3, t3
+AND t4, w1, w2
+MOV w4, t4
+NOT t5, w4
+MOV w5, t5
+OR t6, w2, w3
+MOV w6, t6
+AND t7, w5, w6
+MOV out, t7
+PRINT out

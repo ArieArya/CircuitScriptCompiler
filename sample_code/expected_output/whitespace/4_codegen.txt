@@ -4,3 +4,4 @@ OR t2, 0, 1
 MOV some_wire_2, t2
 AND t3, 1, 1
 MOV some_wire_3, t3
+PRINT some_wire_3

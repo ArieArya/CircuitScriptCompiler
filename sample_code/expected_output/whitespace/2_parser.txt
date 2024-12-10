@@ -66,3 +66,12 @@
                 |-> RPAREN(")")
         |-> SEMICOLON(";")
         |-> StatementList
+          |-> Statement
+            |-> PrintStmt
+              |-> KEYWORD("print")
+              |-> LPAREN("(")
+              |-> Expression
+                |-> IDENTIFIER("some_wire_3")
+              |-> RPAREN(")")
+          |-> SEMICOLON(";")
+          |-> StatementList

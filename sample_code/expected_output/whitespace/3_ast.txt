@@ -23,3 +23,6 @@
       |-> KEYWORD("and")
       |-> DIGIT("1")
       |-> DIGIT("1")
+  |-> PrintStmt
+    |-> KEYWORD("print")
+    |-> IDENTIFIER("some_wire_3")

@@ -30,7 +30,7 @@
                 |-> LPAREN("(")
                 |-> Arguments
                   |-> Expression
-                    |-> IDENTIFIER("r1")
+                    |-> DIGIT("1")
                   |-> Arguments_
                     |-> COMMA(",")
                     |-> Arguments

@@ -15,7 +15,7 @@
     |-> OPERATOR("=")
     |-> GateExpression
       |-> KEYWORD("or")
-      |-> IDENTIFIER("r1")
+      |-> DIGIT("1")
       |-> GateExpression
         |-> KEYWORD("or")
         |-> IDENTIFIER("r1")

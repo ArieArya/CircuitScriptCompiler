@@ -4,12 +4,15 @@
     |-> IDENTIFIER("w1")
     |-> OPERATOR("=")
     |-> GateExpression
-      |-> KEYWORD("or")
+      |-> KEYWORD("and")
+      |-> DIGIT("0")
       |-> GateExpression
-        |-> KEYWORD("and")
+        |-> KEYWORD("or")
         |-> DIGIT("0")
-        |-> DIGIT("1")
-      |-> DIGIT("1")
+        |-> GateExpression
+          |-> KEYWORD("and")
+          |-> DIGIT("1")
+          |-> DIGIT("1")
   |-> PrintStmt
     |-> KEYWORD("print")
     |-> IDENTIFIER("w1")
