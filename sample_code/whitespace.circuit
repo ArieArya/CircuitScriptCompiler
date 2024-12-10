@@ -1,3 +1,5 @@
 wire       some_wire_1 = and(0, 1);
 wire some_wire_2  = or(0,  1);
 wire           some_wire_3    = and (1,  1)   ;
+
+print  (  some_wire_3);

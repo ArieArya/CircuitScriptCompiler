@@ -1,7 +1,7 @@
 reg r1 = 1;
 reg r2 = 0;
 
-wire w1 = or(r1, or(r1, r2));
+wire w1 = or(1, or(r1, r2));
 wire w2 = and(r1, r2);
 
 print(w1);

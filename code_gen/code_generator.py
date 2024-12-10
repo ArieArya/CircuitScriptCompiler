@@ -79,12 +79,12 @@ class CodeGenerator:
 
 		# OR gate optimization
 		if gate_type == 'or' and (arg1_id == '1' or arg2_id == '1'):
-			self.code.append(f'MOV {parent_identifier}, 1;')
+			self.code.append(f'MOV {parent_identifier}, 1')
 			return None  # no temporary registers used
 
 		# AND gate optimization
 		if gate_type == 'and' and (arg1_id == '0' or arg2_id == '0'):
-			self.code.append(f'MOV {parent_identifier}, 0;')
+			self.code.append(f'MOV {parent_identifier}, 0')
 			return None  # no temporary registers used
 
 		# No optimization possible
