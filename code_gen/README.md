@@ -4,7 +4,13 @@ The Python module used to implement the code generation can be found in code_gen
 
 This intermediate representation can then be run with our custom VM built on top of C++ (to minimize latency).
 
+Optimization is also performed to generate an optimized IR. See the section on Optimization below.
+
 ---
+
+## Code Generation Examples
+
+Below are examples of code generation for more complex circuits.
 
 ### Example - Big Circuit 1
 
@@ -27,8 +33,7 @@ wire w5 = and(w4, r5);
 wire w6 = not(w5);
 
 wire out = or(w3, w6);
-
-print(out);
+print(out);  // expected 1
 ```
 
 After running the compiler (lexer, parser, and code generation), we obtain the following intermediate representation (IR):
@@ -83,9 +88,9 @@ wire w3 = and(w1, w2);
 wire w4 = not(w3);
 wire w5 = not(r4);
 wire w6 = or(w5, r5);
-wire out = and(w4, w6);
 
-print(out);
+wire out = and(w4, w6);
+print(out);  // expected 1
 ```
 
 After running the compiler (lexer, parser, and code generation), we obtain the following intermediate representation (IR):
@@ -136,9 +141,9 @@ wire w3 = not(r1);
 wire w4 = and(w1, w2);
 wire w5 = not(w4);
 wire w6 = or(w2, w3);
-wire out = and(w5, w6);
 
-print(out);
+wire out = and(w5, w6);
+print(out);  // expected 0
 ```
 
 After running the compiler (lexer, parser, and code generation), we obtain the following intermediate representation (IR):
@@ -185,7 +190,7 @@ For this circuit, we can represent it using the following code (this can also be
 
 ```
 wire w1 = and(0, or(0, and(1, 1)));
-print(w1);
+print(w1);  // expected 0
 ```
 
 After running our compiler without optimization, we get the following:
