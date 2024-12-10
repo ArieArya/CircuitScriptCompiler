@@ -26,7 +26,6 @@ def main():
 	src_dir = 'sample_code'
 
 	for filename in sorted(os.listdir(src_dir)):
-	# for filename in ["wires_and_registers.circuit"]:
 		file_path = os.path.join(src_dir, filename)
 		filename_no_ext, ext = os.path.splitext(filename)
 

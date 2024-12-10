@@ -17,6 +17,7 @@ enum class InstructionType {
     kAnd,
     kOr,
     kNot,
+    kXor,
 
     // Other.
     kPrint,
@@ -28,6 +29,7 @@ inline InstructionType from_string(std::string_view instr) {
     if (instr == "AND") return InstructionType::kAnd;
     if (instr == "OR") return InstructionType::kOr;
     if (instr == "NOT") return InstructionType::kNot;
+    if (instr == "XOR") return InstructionType::kXor;
     if (instr == "PRINT") return InstructionType::kPrint;
 
     fmt::println("instruction::from_string() error: could not parse instruction {}.", instr);

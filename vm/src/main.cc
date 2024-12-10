@@ -12,7 +12,6 @@
 
 using namespace instruction;
 
-// TODO: Clean this up! This is a quick and dirty prototype.
 std::unordered_map<std::string, bool> symbol_table;
 
 bool get_argument_value(const std::string& arg) {
@@ -59,6 +58,14 @@ void process_instruction(InstructionType instr_type, const std::vector<std::stri
 
         bool val = get_argument_value(args[1]);
         symbol_table[args[0]] = !val;
+        break;
+    }
+    case InstructionType::kXor: {
+        assert(args.size() == 3);
+
+        bool val1 = get_argument_value(args[1]);
+        bool val2 = get_argument_value(args[2]);
+        symbol_table[args[0]] = val1 ^ val2;
         break;
     }
     case InstructionType::kPrint: {

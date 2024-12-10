@@ -11,7 +11,7 @@ First, note that sample codes for our language that will be compiled are stored 
 3. Run the docker container: `docker run circuit-script-compiler`
 4. Copy compiled files / logs from container. Make sure you run the below commands from the root directory of this project.
    - First, find the container ID of the container that ran the program: `docker ps -a`
-   - Now, copy the tester output (containing compiled IR / logs) locally: `docker cp <container-id>:app/sample_code/tester_output ./sample_code/`
+   - Now, copy the tester output (containing compiled IR / logs) locally: `docker cp <container-id>:app/sample_code/tester_output ./sample_code/tester_output_docker/`
 
 The output of the script will show the compiler outputs run on each of the sample circuits stored under `sample_code/*.circuit`. The expected output is found in `sample_code/expected_output/`, while the actual generated output is found in `sample_code/tester_output/` (which you have copied from the container in step 4). Note, errors in compilation / code generation will also be stored in this directory.
 

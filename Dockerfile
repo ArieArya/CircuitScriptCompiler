@@ -1,14 +1,29 @@
-# Use an official Python runtime as the base image
-FROM python:3.9-slim
+FROM ubuntu:22.04
 
-# Set working directory
+# Update and install dependencies.
+RUN apt-get update && \
+    apt-get install -y \
+    build-essential \
+    python3 \
+    python3-pip \
+    python3-dev \
+    ninja-build
+
+# Install Meson.
+RUN pip3 install meson
+
+# Set working directory.
 WORKDIR /app
 
-# Copy Python scripts into the container
+# Copy project files.
 COPY . .
 
-# Copy sample_code directory into the container
-COPY sample_code/ sample_code/
+# Build VM.
+RUN cd vm && \
+    meson setup --wipe build && \
+    cd build && \
+    ninja
 
-# Run script
-CMD ["python", "tester.py"]
+# Run scripts.
+CMD ["python3", "run_compiler.py"]
+CMD ["python3", "run_vm.py"]
