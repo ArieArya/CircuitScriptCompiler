@@ -8,6 +8,12 @@ class CodeGenerator:
 		self.single_arg_gates = ['not']  # gates that allow one argument
 		self.double_arg_gates = ['and', 'or', 'xor']  # gates that allow two arguments
 
+	# Generates a temporary register (auto-increments)
+	def _get_temp_reg(self):
+		temp_reg = f't{self.temp_counter}'
+		self.temp_counter += 1
+		return temp_reg
+
 	def _extract_node_content(self, node):
 		return str(node.label).split('"')[1]
 
@@ -38,9 +44,8 @@ class CodeGenerator:
 		else:
 			arg1_id = self._extract_node_content(arg1_node)
 
-		temp_reg = f't{self.temp_counter}'
+		temp_reg = self._get_temp_reg()
 		self.code.append(f'{gate_type.upper()} {temp_reg}, {arg1_id}')
-		self.temp_counter += 1
 		return temp_reg  # temporary register to hold result of gate expressions
 
 	# Double gate expression handler (e.g. OR, AND)
@@ -57,9 +62,8 @@ class CodeGenerator:
 		else:
 			arg2_id = self._extract_node_content(arg2_node)
 
-		temp_reg = f't{self.temp_counter}'
+		temp_reg = self._get_temp_reg()
 		self.code.append(f'{gate_type.upper()} {temp_reg}, {arg1_id}, {arg2_id}')
-		self.temp_counter += 1
 		return temp_reg  # temporary register to hold result of gate expressions
 
 	# Performs logic gate optimization
@@ -85,21 +89,18 @@ class CodeGenerator:
 
 		# No optimization possible
 		if arg1_id == None:
-			arg1_id = f't{self.temp_counter}'
-			self.temp_counter += 1
+			arg1_id = self._get_temp_reg()
 			temp_reg = self._handle_gate_expression(arg1_node, arg1_id)
 			if temp_reg:
 				self.code.append(f'MOV {arg1_id}, {temp_reg}')
 		if arg2_id == None:
-			arg2_id = f't{self.temp_counter}'
-			self.temp_counter += 1
+			arg2_id = self._get_temp_reg()
 			temp_reg = self._handle_gate_expression(arg2_node, arg2_id)
 			if temp_reg:
 				self.code.append(f'MOV {arg2_id}, {temp_reg}')
 
 		# Perform gate operation
-		temp_reg = f't{self.temp_counter}'
-		self.temp_counter += 1
+		temp_reg = self._get_temp_reg()
 		self.code.append(f'{gate_type.upper()} {temp_reg}, {arg1_id}, {arg2_id}')
 		return temp_reg
 
