@@ -2,9 +2,9 @@
 
 ## How to Run
 
-Note, this section specifies how to run our compiler and VM (to read the IR from the compiler). This includes all steps (lexer, parser, code generation, and code execution).
+Note, this section specifies how to run our compiler and the virtual machine to execute the IR output from the compiler. This includes all steps (lexer, parser, code generation, and code execution).
 
-Our compiler and VM is dockerized for ease of testing. Note that all sample source codes for our language that will be compiled are stored under `sample_code/*.circuit`.
+Our compiler and VM is dockerized for ease of testing. Note that sample source codes for our language are stored under `sample_code/*.circuit`. Soure codes in this directory will automatically be compiled and run by the dockerized application.
 
 Follow the steps below:
 
