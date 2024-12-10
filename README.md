@@ -15,6 +15,14 @@ First, note that sample codes for our language that will be compiled are stored 
 
 The output of the script will show the compiler outputs run on each of the sample circuits stored under `sample_code/*.circuit`. The expected output is found in `sample_code/expected_output/`, while the actual generated output is found in `sample_code/tester_output/` (which you have copied from the container in step 4). Note, errors in compilation / code generation will also be stored in this directory.
 
+## Running the VM
+
+For running the VM on individual files, see [vm/README.md#executing-files](vm/README.md#executing-files).
+
+For testing the VM on each sample code example, follow [vm/README.md#building](vm/README.md#building) for steps to build the VM binary, then execute `run_vm.py`.
+
+The VM is automatically ran in the Dockerfile, so the above instructions are enough to get the VM output on the sample code.
+
 ## Lexical Specification
 
 Please find the README under `lexer/README.md` (HW1)
