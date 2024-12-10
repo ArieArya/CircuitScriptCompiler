@@ -50,14 +50,17 @@ Please find the README under `lexer/README.md` (HW1)
 ## Syntactic Specification
 
 Please find the README under `parser/README.md` (HW2)
+Please find the demo video in `asmt2-video-demo.txt`
 
 ## Code Generation
 
 Please find the README under `code_gen/README.md` (HW3)
+Plase find the demo video in `asmt3-video-demo.txt`
 
 ## Virtual Machine (VM)
 
 Please find the README under `vm/README.md` (HW3)
+Plase find the demo video in `asmt3-video-demo.txt`
 
 ## Contributions
 
