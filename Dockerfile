@@ -25,5 +25,6 @@ RUN cd vm && \
     ninja
 
 # Run scripts.
-CMD ["python3", "run_compiler.py"]
+# Cannot have multiple CMDs, so we make this one a RUN.
+RUN python3 run_compiler.py
 CMD ["python3", "run_vm.py"]
