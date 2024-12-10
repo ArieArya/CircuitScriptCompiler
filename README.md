@@ -27,11 +27,17 @@ The above command will store the output of the compiler into your local director
 
 ---
 
+## Running the Compiler Individually
+
+If you have the CPython interpreter set up (Python 3), you can run the compiler directly via `python3 run_compiler.py`. The output of the compiler will be stored under `sample_code/tester_output/*`. Otherwise, please run the compiler via docker in the steps above.
+
+---
+
 ## Running the VM Individually
 
 For running the VM on individual files, see [vm/README.md#executing-files](vm/README.md#executing-files).
 
-For testing the VM on each sample code example, follow [vm/README.md#building](vm/README.md#building) for steps to build the VM binary, then execute `run_vm.py`.
+For testing the VM on each sample source code, follow [vm/README.md#building](vm/README.md#building) for steps to build the VM binary, then execute `python3 run_vm.py` if you have the CPython interpreter set up (Python3). Otherwise, please run the VM via docker in the steps above.
 
 The VM is automatically ran in the Dockerfile, so the above instructions are enough to get the VM output on the sample code.
 
