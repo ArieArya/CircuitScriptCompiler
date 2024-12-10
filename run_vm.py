@@ -33,8 +33,8 @@ def main():
 
         test_output_dir = os.path.join(src_dir, 'tester_output', filename_no_ext)
         os.makedirs(test_output_dir, exist_ok=True)
-        codegen_path = os.path.join(test_output_dir, '4_codegen.txt')
-        vm_output_path = os.path.join(test_output_dir, '5_vm.txt')
+        codegen_path = os.path.join(test_output_dir, '5_optimized.txt')
+        vm_output_path = os.path.join(test_output_dir, '6_vm.txt')
 
         if os.path.exists(codegen_path):
             if read_first_line(codegen_path).startswith('Code generation error'):

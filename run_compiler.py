@@ -38,8 +38,9 @@ def main():
 		parser_path = os.path.join(test_output_dir, '2_parser.txt')
 		ast_path = os.path.join(test_output_dir, '3_ast.txt')
 		codegen_path = os.path.join(test_output_dir, '4_codegen.txt')
+		optimized_path = os.path.join(test_output_dir, '5_optimized.txt')
 
-		# Lexical Analysis
+		# 1. Lexical Analysis
 		source_code = read(f'sample_code/{filename}')
 		tokenizer = Tokenizer(source_code)
 		tokens, errors = tokenizer.tokenize()
@@ -49,7 +50,7 @@ def main():
 			write(lexer_path, Tokenizer.errors_to_str(errors))
 			continue
 
-		# Syntactic Analysis - build parse tree
+		# 2. Syntactic Analysis - build parse tree
 		parser = LL1Parser(tokens)
 		try:
 			parse_tree = parser.parse()
@@ -58,18 +59,26 @@ def main():
 			write(parser_path, f'Parse error: {err}')
 			continue
 
-		# Syntactic Analysis - build AST
+		# 3. Syntactic Analysis - build AST
 		ast_gen = ASTGenerator()
 		ast = ast_gen.build_ast(parse_tree)
 		write(ast_path, ast_gen.ast_to_str(ast))
 
-		# Code Generation - generate intermediate code
+		# 4. Code Generation - generate intermediate code
 		try:
 			code_generator = CodeGenerator(ast)
 			code_generator.generate_ir()
 			write(codegen_path, code_generator.get_code_str())
 		except Exception as err:
 			write(codegen_path, f'Code generation error: {err}')
+
+		# 5. Code Generation with optimization
+		try:
+			code_generator_opt = CodeGenerator(ast, True)
+			code_generator_opt.generate_ir()
+			write(optimized_path, code_generator_opt.get_code_str())
+		except Exception as err:
+			write(optimized_path, f'Code generation error: {err}')
 
 
 if __name__ == '__main__':

@@ -167,3 +167,42 @@ After running on the VM, we get the following output:
 ```
 out = 0
 ```
+
+---
+
+## Optimization
+
+Optimization can also be performed in the form of **circuit / branch reduction**. Namely, we have implemented a basic optimization to remove branches in our circuits that are redundant. For example:
+
+-   If we have an **OR gate**, we know that the output will always be 1 if one of its input is 1. Thus, if we know that either of its input is 1, we can set its output to 1 without evaluating the other input.
+-   Similarly, if we have an **AND** gate, we know that the output will always be 0 if one of its input is 0. Thus, if we know that either of its input is 0, we can set its output to 0 without evaluating the other.
+
+### Example - Optimizable Circuit
+
+![OptimizableCircuit](../docs/optimizable_circuit.png "Optimizable Circuit")
+
+For this circuit, we can represent it using the following code (this can also be found in `sample_code/optimizable.circuit`):
+
+```
+wire w1 = and(0, or(0, and(1, 1)));
+print(w1);
+```
+
+After running our compiler without optimization, we get the following:
+
+```
+AND t1, 1, 1
+OR t2, 0, t1
+AND t3, 0, t2
+MOV w1, t3
+PRINT w1
+```
+
+This is suboptimal, since we are evaluating the top branch of our circuit, which is redundant since we know that the final **AND gate** has an input with a 0. Thus, this AND gate must evaluate to 0 regardless of the top branch. After running optimization, we get:
+
+```
+MOV w1, 0;
+PRINT w1
+```
+
+As can be seen, after performing circuit / branch reduction, we obtain a much more optimized code. The top branch of our circuit is eliminated, and our resulting IR is optimized.
