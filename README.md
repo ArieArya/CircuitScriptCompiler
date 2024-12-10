@@ -19,7 +19,7 @@ Follow the steps below:
 The above command will store the output of the compiler into your local directory `./sample_code/tester_output_docker/`. Please view this directory to see the output of both the compiler and the VM for each circuit. Each circuit contains the following logs:
 
 -   `1_lexer.txt`: contains the lexer output
--   `2_parser.txt`: contains the parser output
+-   `2_parser.txt`: contains the parser output (parse tree)
 -   `3_ast.txt`: contains the AST of the program
 -   `4_codegen.txt`: contains the intermediate representation (IR) of the program. This is not yet optimized.
 -   `5_optimized.txt`: contains the optimized IR of the program.
