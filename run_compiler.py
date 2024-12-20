@@ -41,9 +41,6 @@ def main():
         codegen_path = os.path.join(test_output_dir, '4_codegen.txt')
         optimized_path = os.path.join(test_output_dir, '5_optimized.txt')
 
-        if filename != 'wires_and_registers.circuit':
-            continue
-
         # 1. Lexical Analysis
         source_code = read(f'sample_code/{filename}')
         tokenizer = Tokenizer(source_code)
@@ -84,9 +81,6 @@ def main():
             opt_ir = optimizer.optimize()
             opt_ir_str = '\n'.join(str(instr) for instr in opt_ir)
             write(optimized_path, opt_ir_str)
-
-            print('\n')
-            print(opt_ir_str)
         except Exception as err:
             write(optimized_path, f'Optimization error: {err}')
 

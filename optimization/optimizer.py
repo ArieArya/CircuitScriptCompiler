@@ -69,7 +69,6 @@ class Optimizer:
                     new_arg = constant_vars.get(arg, arg)
                     instr.args = (new_arg,)
 
-    # TODO: Implement. This currently leaves the IR untouched.
     def constant_folding(self):
         for instr in self.ir:
             match instr.type:
@@ -87,15 +86,41 @@ class Optimizer:
                         instr.args = (var, str(val))
                         instr.type = 'MOV'
 
-    # TODO: Implement. This currently leaves the IR untouched.
     def dead_code_elimination(self):
-        pass
+        used_vars = set()
+
+        for instr in self.ir:
+            match instr.type:
+                case 'AND' | 'OR' | 'XOR':
+                    _, arg1, arg2 = instr.args
+                    if not _is_constant(arg1):
+                        used_vars.add(arg1)
+                    if not _is_constant(arg2):
+                        used_vars.add(arg2)
+
+                case 'NOT' | 'LOAD' | 'MOV':
+                    _, arg = instr.args
+                    if not _is_constant(arg):
+                        used_vars.add(arg)
+
+                case 'PRINT':
+                    (arg,) = instr.args
+                    if not _is_constant(arg):
+                        used_vars.add(arg)
+
+        # Remove unused variable assignments.
+        for instr in self.ir[:]:
+            match instr.type:
+                case 'LOAD' | 'MOV':
+                    var, _ = instr.args
+                    if var not in used_vars:
+                        self.ir.remove(instr)
 
     # Continuously apply optimizations until no more changes are made.
     def optimize(self):
         old_ir = None
         while self.ir != old_ir:
-            old_ir = self.ir
+            old_ir = self.ir[:]
             [f() for f in self.optimizations]  # Apply all optimizations.
         return self.ir
 
