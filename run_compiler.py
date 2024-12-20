@@ -54,7 +54,7 @@ def main():
             write(lexer_path, Tokenizer.errors_to_str(errors))
             continue
 
-        # 2. Syntactic Analysis - build parse tree
+        # 2. Syntactic Analysis — build parse tree
         parser = LL1Parser(tokens)
         try:
             parse_tree = parser.parse()
@@ -63,29 +63,29 @@ def main():
             write(parser_path, f'Parse error: {err}')
             continue
 
-        # 3. Syntactic Analysis - build AST
+        # 3. Syntactic Analysis — build AST
         ast_gen = ASTGenerator()
         ast = ast_gen.build_ast(parse_tree)
         write(ast_path, ast_gen.ast_to_str(ast))
 
-        # 4. Code Generation - generate intermediate code
+        # 4. Code Generation — generate IR
         try:
             # Do minor optimization on the AST before the main optimization step.
             code_generator = CodeGenerator(ast, optimize=True)
             ir = code_generator.generate_ir()
             ir_str = '\n'.join(str(instr) for instr in ir)
             write(codegen_path, ir_str)
-
-            print(ir_str)
         except Exception as err:
             write(codegen_path, f'Code generation error: {err}')
 
-        # 5. Optimization
+        # 5. Optimization — generate optimized IR
         try:
             optimizer = Optimizer(ir)
-            ir = optimizer.optimize()
-            ir_str = '\n'.join(str(instr) for instr in ir)
-            write(optimized_path, ir_str)
+            opt_ir = optimizer.optimize()
+            opt_ir_str = '\n'.join(str(instr) for instr in opt_ir)
+            write(optimized_path, opt_ir_str)
+
+            print(opt_ir_str)
         except Exception as err:
             write(optimized_path, f'Optimization error: {err}')
 
