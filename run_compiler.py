@@ -2,6 +2,7 @@ import os
 from lexer import Tokenizer
 from parser import LL1Parser, ASTGenerator
 from code_gen import CodeGenerator
+from optimization import Optimizer
 
 
 def read(file_path):
@@ -69,21 +70,24 @@ def main():
 
         # 4. Code Generation - generate intermediate code
         try:
-            code_generator = CodeGenerator(ast)
+            # Do minor optimization on the AST before the main optimization step.
+            code_generator = CodeGenerator(ast, optimize=True)
             ir = code_generator.generate_ir()
             ir_str = '\n'.join(str(instr) for instr in ir)
             write(codegen_path, ir_str)
+
+            print(ir_str)
         except Exception as err:
             write(codegen_path, f'Code generation error: {err}')
 
-        # 5. Code Generation with optimization
+        # 5. Optimization
         try:
-            code_generator_opt = CodeGenerator(ast, True)
-            ir = code_generator_opt.generate_ir()
+            optimizer = Optimizer(ir)
+            ir = optimizer.optimize()
             ir_str = '\n'.join(str(instr) for instr in ir)
             write(optimized_path, ir_str)
         except Exception as err:
-            write(optimized_path, f'Code generation error: {err}')
+            write(optimized_path, f'Optimization error: {err}')
 
 
 if __name__ == '__main__':
