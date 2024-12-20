@@ -54,7 +54,7 @@ class CodeGenerator:
             arg1_id = self._extract_node_content(arg1_node)
 
         temp_reg = self._get_temp_reg()
-        self.ir.append(Instruction(gate_type, [temp_reg, arg1_id]))
+        self.ir.append(Instruction(gate_type, (temp_reg, arg1_id)))
         return temp_reg  # temporary register to hold result of gate expressions
 
     # Double gate expression handler (e.g. OR, AND)
@@ -72,7 +72,7 @@ class CodeGenerator:
             arg2_id = self._extract_node_content(arg2_node)
 
         temp_reg = self._get_temp_reg()
-        self.ir.append(Instruction(gate_type, [temp_reg, arg1_id, arg2_id]))
+        self.ir.append(Instruction(gate_type, (temp_reg, arg1_id, arg2_id)))
         return temp_reg  # temporary register to hold result of gate expressions
 
     # Performs logic gate optimization
@@ -90,12 +90,12 @@ class CodeGenerator:
 
         # OR gate optimization
         if gate_type == 'or' and (arg1_id == '1' or arg2_id == '1'):
-            self.ir.append(Instruction('MOV', [parent_identifier, '1']))
+            self.ir.append(Instruction('MOV', (parent_identifier, '1')))
             return None  # no temporary registers used
 
         # AND gate optimization
         if gate_type == 'and' and (arg1_id == '0' or arg2_id == '0'):
-            self.ir.append(Instruction('MOV', [parent_identifier, '0']))
+            self.ir.append(Instruction('MOV', (parent_identifier, '0')))
             return None  # no temporary registers used
 
         # No optimization possible
@@ -103,16 +103,16 @@ class CodeGenerator:
             arg1_id = self._get_temp_reg()
             temp_reg = self._handle_gate_expression(arg1_node, arg1_id)
             if temp_reg:
-                self.ir.append(Instruction('MOV', [arg1_id, temp_reg]))
+                self.ir.append(Instruction('MOV', (arg1_id, temp_reg)))
         if arg2_id == None:
             arg2_id = self._get_temp_reg()
             temp_reg = self._handle_gate_expression(arg2_node, arg2_id)
             if temp_reg:
-                self.ir.append(Instruction('MOV', [arg2_id, temp_reg]))
+                self.ir.append(Instruction('MOV', (arg2_id, temp_reg)))
 
         # Perform gate operation
         temp_reg = self._get_temp_reg()
-        self.ir.append(Instruction(gate_type, [temp_reg, arg1_id, arg2_id]))
+        self.ir.append(Instruction(gate_type, (temp_reg, arg1_id, arg2_id)))
         return temp_reg
 
     def _handle_declaration(self, node):
@@ -126,7 +126,7 @@ class CodeGenerator:
         # 1. Register declaration
         if identifier_type == 'reg' and 'DIGIT' in str(val_node.label):
             val = self._extract_node_content(val_node)
-            self.ir.append(Instruction('LOAD', [identifier, val]))
+            self.ir.append(Instruction('LOAD', (identifier, val)))
 
         # 2. Wire declaration
         elif identifier_type == 'wire' and str(val_node.label) == 'GateExpression':
@@ -134,7 +134,7 @@ class CodeGenerator:
                 val_node, identifier
             )  # must evaluate gate expression first
             if temp_reg != None:  # required if optimization enabled
-                self.ir.append(Instruction('MOV', [identifier, temp_reg]))
+                self.ir.append(Instruction('MOV', (identifier, temp_reg)))
 
         # Handle invalid declarations
         else:
@@ -145,7 +145,7 @@ class CodeGenerator:
 
         # Extract identifier to print
         identifier = self._extract_node_content(children[1])
-        self.ir.append(Instruction('PRINT', [identifier]))
+        self.ir.append(Instruction('PRINT', (identifier,)))
 
     def generate_ir(self):
         # Iterate over AST

@@ -85,6 +85,7 @@ def main():
             opt_ir_str = '\n'.join(str(instr) for instr in opt_ir)
             write(optimized_path, opt_ir_str)
 
+            print('\n')
             print(opt_ir_str)
         except Exception as err:
             write(optimized_path, f'Optimization error: {err}')
