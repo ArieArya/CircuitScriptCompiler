@@ -1,2 +1,1 @@
-MOV w1, 0
-PRINT w1
+PRINT 0

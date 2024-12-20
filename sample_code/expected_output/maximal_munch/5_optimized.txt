@@ -1,8 +1,2 @@
-LOAD orr, 1
-LOAD andd, 0
-OR t1, orr, andd
-MOV wire123, t1
-AND t2, andd, orr
-MOV w1, t2
-PRINT w1
-PRINT wire123
+PRINT 0
+PRINT 1

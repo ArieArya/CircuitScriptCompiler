@@ -1,1 +1,1 @@
-Code generation error: Invalid number of arguments (3) passed to gate NOT
+PRINT 1

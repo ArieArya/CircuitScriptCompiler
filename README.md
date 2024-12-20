@@ -55,6 +55,10 @@ Please find the README under `parser/README.md` (HW2) and the demo video in `asm
 
 Please find the README under `code_gen/README.md` (HW3) and the demo video in `asmt3-video-demo.txt`
 
+## Optimization
+
+Please find the README under `optimization/README.md` (HW4) and the demo video in `asmt4-video-demo.txt`
+
 ## Virtual Machine (VM)
 
 Please find the README under `vm/README.md` (HW3) and the demo video in `asmt3-video-demo.txt`
